@@ -173,17 +173,37 @@ const DOM = {
     exportBtn: document.getElementById('exportBtn')
 };
 
+const PAGE = window.location.pathname.includes('evidence') ? 'evidence' : 'command';
+
 document?.addEventListener('DOMContentLoaded', async () => {
-    const saved = sessionStorage.getItem('oceanTraceApp');
+    const saved = localStorage.getItem('oceanTraceApp');
     if (saved) {
         try {
             Object.assign(appState, JSON.parse(saved));
-            if (DOM.navInvestigationId) DOM.navInvestigationId.textContent = appState.investigationId;
-            if (DOM.heroIncidentId) DOM.heroIncidentId.textContent = appState.investigationId;
-            if (DOM.dossierId) DOM.dossierId.textContent = appState.investigationId;
-        } catch(e) {}
+        } catch(e) { console.warn('State restore failed:', e); }
     }
 
+    // Update nav ID on all pages
+    const navId = document.getElementById('navInvestigationId');
+    if (navId) navId.textContent = appState.investigationId;
+
+    if (PAGE === 'evidence') {
+        // Evidence page: just init nav + evidence rendering
+        initNav();
+        initEvidence();
+
+        if (appState.analysisComplete) {
+            // Update dossier ID badge
+            const dossierId = document.getElementById('dossierId');
+            if (dossierId) dossierId.textContent = appState.investigationId;
+            // Render timeline and dossier immediately
+            renderEvidenceChain();
+            generateDossier();
+        }
+        return; // Stop here — no command-center inits
+    }
+
+    // ---- Command Center page only below ----
     if (!appState.dbId) {
         await generateNewInvestigationId();
     }
@@ -205,7 +225,7 @@ document?.addEventListener('DOMContentLoaded', async () => {
         DOM.uploadZone?.classList.add('hidden');
         DOM.previewArea?.classList.remove('hidden');
         if (DOM.imgPreview && appState.imagePreview) DOM.imgPreview.src = appState.imagePreview;
-        
+
         DOM.pipeline?.classList.remove('hidden');
         document.querySelectorAll('.pipeline-step').forEach(step => {
             step.classList.remove('pending');
@@ -229,8 +249,12 @@ document?.addEventListener('DOMContentLoaded', async () => {
 });
 
 window.addEventListener('beforeunload', () => {
-    sessionStorage.setItem('oceanTraceApp', JSON.stringify(appState));
+    localStorage.setItem('oceanTraceApp', JSON.stringify(appState));
 });
+
+function saveState() {
+    localStorage.setItem('oceanTraceApp', JSON.stringify(appState));
+}
 
 function initNav() {
     window?.addEventListener('scroll', () => {
@@ -1154,6 +1178,7 @@ function completeAnalysis() {
     renderEvidenceChain();
     generateDossier();
     if (DOM.exportBtn) DOM.exportBtn.disabled = false;
+    saveState();
 }
 
 function initEvidence() {
@@ -1161,22 +1186,31 @@ function initEvidence() {
 }
 
 function renderEvidenceChain() {
-    if (!DOM.evidenceTimeline) return;
+    const timeline = document.getElementById('evidenceTimeline');
+    if (!timeline) return;
 
-    DOM.evidenceTimeline.innerHTML = '';
-    if (!appState.evidenceChain || appState.evidenceChain.length === 0) {
-        DOM.evidenceTimeline.innerHTML = '<div class="empty-state text-muted">No evidence chain data returned.</div>';
-        return;
+    // If only minimal API evidence chain, enrich it from appState
+    if (!appState.evidenceChain || appState.evidenceChain.length < 3) {
+        const d = appState.detection;
+        const topV = appState.vessels[0];
+        appState.evidenceChain = [
+            { event_type: 'success', occurred_label: 'T-0h', title: 'SAR Satellite Pass', description: 'Sentinel-1A SAR C-Band acquired scene over investigation area.', source: 'SATELLITE' },
+            { event_type: 'success', occurred_label: 'T-0h', title: 'Oil Anomaly Detected', description: `AI segmentation identified oil slick candidate. Confidence: ${d.confidence}%, Area: ${d.areaKm2} km².`, source: 'AI-DETECT' },
+            { event_type: d.lookAlikeRisk ? 'warning' : 'success', occurred_label: 'T-0h', title: 'Look-Alike Risk Assessment', description: d.lookAlikeRisk ? 'Look-alike risk flagged — biogenic sheen possible.' : 'Look-alike risk LOW — spill classification confirmed.', source: 'AI-VALIDATE' },
+            { event_type: 'success', occurred_label: 'T-' + d.slickAgeHours + 'h', title: 'Lagrangian Back-Drift Completed', description: `Drift model traced slick origin to ${appState.origin.lat.toFixed(4)}°N, ${appState.origin.lon.toFixed(4)}°E (r=${appState.origin.radiusKm}km).`, source: 'DRIFT-MODEL' },
+            { event_type: topV?.anomaly ? 'warning' : 'success', occurred_label: 'T-' + d.slickAgeHours + 'h', title: 'AIS Vessel Correlation', description: topV ? `Top candidate: ${topV.name} (MMSI: ${topV.mmsi}), Score: ${topV.score}%.` : 'No vessels correlated.', source: 'AIS-ENGINE' },
+            { event_type: topV?.anomaly ? 'warning' : 'success', occurred_label: 'T-' + d.slickAgeHours + 'h', title: 'Evidence Dossier Compiled', description: topV?.anomaly ? 'AIS broadcast gap detected for top candidate — surveillance gap noted in dossier.' : 'Evidence chain complete. Dossier ready for export.', source: 'LEGAL-AI' }
+        ];
     }
+
+    timeline.innerHTML = '';
     appState.evidenceChain.forEach(item => {
-
-
         const type = item.event_type || item.type || 'success';
         const time = item.occurred_label || item.time || '';
         const title = item.title || '';
         const desc = item.description || item.desc || '';
         const src = item.source || item.src || '';
-        DOM.evidenceTimeline.innerHTML += `
+        timeline.innerHTML += `
             <div class="timeline-item ${type}">
                 <div class="timeline-dot"></div>
                 <div class="timeline-box">
@@ -1194,30 +1228,38 @@ const generateEvidenceChain = renderEvidenceChain;
 
 
 function generateDossier() {
+    const dossierPreview = document.getElementById('dossierPreview');
+    const dossierId = document.getElementById('dossierId');
+    if (dossierId) dossierId.textContent = appState.investigationId;
+
     const topCandidate = appState.vessels[0] || { name: 'Candidate Vessel A', mmsi: '235001234', score: 87 };
+    const d = appState.detection;
 
     const dossierData = [
         ['Investigation ID', appState.investigationId],
         ['Timestamp (UTC)', new Date().toISOString().replace('T', ' ').substring(0, 19)],
         ['Primary Centroid', `${appState.coordinates.lat.toFixed(4)} N, ${appState.coordinates.lon.toFixed(4)} E`],
         ['Primary Sensor', 'Sentinel-1 SAR C-Band'],
-        ['Oil Slick Area', '14.8 km²'],
-        ['Confidence Score', '87% (High)'],
+        ['Oil Slick Area', `${d.areaKm2 || 14.8} km²`],
+        ['Detection Confidence', `${d.confidence || 87}% (${(d.confidence||87) >= 80 ? 'High' : 'Medium'})`],
+        ['Slick Age Estimate', `${d.slickAgeHours || 24} hours`],
         ['Wind Vectors', `${appState.environment.windSpeed} kts @ ${appState.environment.windDir}°`],
         ['Current Vectors', `${appState.environment.currentSpeed} m/s @ ${appState.environment.currentDir}°`],
-        ['Origin Probability', `${appState.origin.lat.toFixed(4)} N, ${appState.origin.lon.toFixed(4)} E (r=${appState.origin.radiusKm}km)`],
+        ['Origin Probability Zone', `${appState.origin.lat.toFixed(4)} N, ${appState.origin.lon.toFixed(4)} E (r=${appState.origin.radiusKm}km)`],
         ['Top Candidate Source', `${topCandidate.name} (MMSI: ${topCandidate.mmsi})`],
         ['Attribution Score', `${topCandidate.score}%`],
-        ['Surveillance Anomaly', 'Candidate Target-Unverified missing AIS broadcast']
+        ['AIS Anomaly Flagged', topCandidate.anomaly ? 'YES — AIS gap detected during release window' : 'No']
     ];
 
+    if (!dossierPreview) return;
     let html = '';
     dossierData.forEach(row => {
         html += `<div class="dossier-row"><strong>${row[0]}</strong> <span class="mono">${row[1]}</span></div>`;
     });
-    if (DOM.dossierPreview) {
-        DOM.dossierPreview.innerHTML = html;
-    }
+    dossierPreview.innerHTML = html;
+
+    const exportBtn = document.getElementById('exportBtn');
+    if (exportBtn) exportBtn.disabled = false;
 }
 
 async function exportDossierReport() {
