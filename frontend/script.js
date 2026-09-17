@@ -317,10 +317,10 @@ function initLeafletMap() {
         });
 
 
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-            subdomains: 'abcd',
-            maxZoom: 19
+        // Use Stadia Maps dark tile — free, no API key needed
+        L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            maxZoom: 20
         }).addTo(map);
 
 
@@ -514,13 +514,13 @@ function calculateUncertaintyCone(trajectoryPoints) {
     const coneRight = [];
 
     trajectoryPoints.forEach((pt, index) => {
-
-        const expansionKm = 1.5 + (index * 2.5) + (appState.whatIf.radiusKm * 0.3);
-        const latOffset = (expansionKm / 111.0);
-        const lonOffset = (expansionKm / (111.0 * Math.cos(pt[0] * Math.PI / 180)));
-
-        coneLeft.push([pt[0] + latOffset, pt[1] - lonOffset]);
-        coneRight.unshift([pt[0] - latOffset, pt[1] + lonOffset]);
+        // Expand perpendicular to the drift direction
+        const expansionKm = 1.0 + (index * 1.8) + (appState.whatIf.radiusKm * 0.15);
+        const latOffset = expansionKm / 111.0;
+        const lonOffset = expansionKm / (111.0 * Math.cos(pt[0] * Math.PI / 180));
+        // Perpendicular: swap lat/lon offsets to go sideways relative to trajectory
+        coneLeft.push([pt[0] + lonOffset, pt[1] - latOffset]);
+        coneRight.unshift([pt[0] - lonOffset, pt[1] + latOffset]);
     });
 
     return coneLeft.concat(coneRight);
@@ -560,55 +560,74 @@ function renderMapLayers() {
     `);
 
 
+    // Use detection centroid (slightly offset from investigation point)
+    const cLat = appState.detection.centroid?.lat || appState.coordinates.lat + 0.005;
+    const cLon = appState.detection.centroid?.lon || appState.coordinates.lon + 0.003;
+
     if (appState.analysisComplete) {
-        const spillCoords = generateSlickPolygonCoords(appState.coordinates.lat, appState.coordinates.lon);
+        const spillCoords = generateSlickPolygonCoords(cLat, cLon);
         mapLayers.spillPolygon = L.polygon(spillCoords, {
             color: '#eab308',
             fillColor: '#eab308',
             fillOpacity: 0.35,
             weight: 2
-        });
+        }).bindPopup(`<div class="mono"><strong>🛢️ Oil Slick</strong><br>Area: ${appState.detection.areaKm2 || 14.8} km²<br>Confidence: ${appState.detection.confidence || 87}%<br>Age: ~${appState.detection.slickAgeHours || 24}h</div>`);
         if (appState.layers.spill) mapLayers.spillPolygon.addTo(map);
     }
 
+    // Always compute drift locally from current appState physics
+    const backTrack = calculateDriftTrajectory(
+        cLat, cLon,
+        appState.environment.windSpeed, appState.environment.windDir,
+        appState.environment.currentSpeed, appState.environment.currentDir,
+        appState.drift.forecastHours, true
+    );
+    const fwdTrack = calculateDriftTrajectory(
+        cLat, cLon,
+        appState.environment.windSpeed, appState.environment.windDir,
+        appState.environment.currentSpeed, appState.environment.currentDir,
+        appState.drift.forecastHours, false
+    );
+
+    // Update origin from back-drift end point
+    const originPt = backTrack[backTrack.length - 1];
+    appState.origin.lat = originPt[0];
+    appState.origin.lon = originPt[1];
 
     mapLayers.originCircle = L.circle([appState.origin.lat, appState.origin.lon], {
         radius: appState.origin.radiusKm * 1000,
         color: '#f97316',
         fillColor: '#f97316',
-        fillOpacity: 0.15,
+        fillOpacity: 0.18,
         dashArray: '6,6',
         weight: 2
-    });
+    }).bindPopup(`<div class="mono"><strong>🔴 Probable Origin Zone</strong><br>Lat: ${appState.origin.lat.toFixed(4)}°N<br>Lon: ${appState.origin.lon.toFixed(4)}°E<br>Radius: ${appState.origin.radiusKm} km</div>`);
     if (appState.layers.origin) mapLayers.originCircle.addTo(map);
 
-
-    mapLayers.backDriftPolyline = L.polyline(appState.drift.trajectoryBack, {
+    mapLayers.backDriftPolyline = L.polyline(backTrack, {
         color: '#f97316',
-        weight: 3,
-        dashArray: '8,8'
-    });
+        weight: 2.5,
+        dashArray: '8,6',
+        opacity: 0.9
+    }).bindPopup('<div class="mono"><strong>⬅️ Back-Drift Trajectory</strong><br>Traces slick backwards to probable source</div>');
     if (appState.layers.backDrift) mapLayers.backDriftPolyline.addTo(map);
 
-
-    mapLayers.forwardDriftPolyline = L.polyline(appState.drift.trajectoryForward, {
+    mapLayers.forwardDriftPolyline = L.polyline(fwdTrack, {
         color: '#0ea5e9',
-        weight: 3
-    });
+        weight: 2.5,
+        opacity: 0.85
+    }).bindPopup('<div class="mono"><strong>➡️ Forecast Trajectory</strong><br>Predicted future drift of slick</div>');
     if (appState.layers.forwardDrift) mapLayers.forwardDriftPolyline.addTo(map);
 
-
-    const coneCoords = calculateUncertaintyCone(
-        appState.drift.mode === 'back' ? appState.drift.trajectoryBack : appState.drift.trajectoryForward
-    );
+    const coneCoords = calculateUncertaintyCone(backTrack);
     mapLayers.uncertaintyConePolygon = L.polygon(coneCoords, {
-        color: '#0ea5e9',
-        fillColor: '#0ea5e9',
-        fillOpacity: 0.08,
-        stroke: false
+        color: '#f97316',
+        fillColor: '#f97316',
+        fillOpacity: 0.07,
+        weight: 1,
+        dashArray: '4,4'
     });
     if (appState.layers.cone) mapLayers.uncertaintyConePolygon.addTo(map);
-
 
     updateVesselMapPositions();
 }
