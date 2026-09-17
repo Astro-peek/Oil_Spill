@@ -174,7 +174,20 @@ const DOM = {
 };
 
 document?.addEventListener('DOMContentLoaded', async () => {
-    await generateNewInvestigationId();
+    const saved = sessionStorage.getItem('oceanTraceApp');
+    if (saved) {
+        try {
+            Object.assign(appState, JSON.parse(saved));
+            if (DOM.navInvestigationId) DOM.navInvestigationId.textContent = appState.investigationId;
+            if (DOM.heroIncidentId) DOM.heroIncidentId.textContent = appState.investigationId;
+            if (DOM.dossierId) DOM.dossierId.textContent = appState.investigationId;
+        } catch(e) {}
+    }
+
+    if (!appState.dbId) {
+        await generateNewInvestigationId();
+    }
+
     initNav();
     initLeafletMap();
     initInputBar();
@@ -183,6 +196,40 @@ document?.addEventListener('DOMContentLoaded', async () => {
     initEnvironmentalControls();
     initVesselAttribution();
     initEvidence();
+
+    if (appState.analysisComplete) {
+        if (DOM.runBtn) {
+            DOM.runBtn.textContent = 'Re-Run AI Analysis';
+            DOM.runBtn.disabled = false;
+        }
+        DOM.uploadZone?.classList.add('hidden');
+        DOM.previewArea?.classList.remove('hidden');
+        if (DOM.imgPreview && appState.imagePreview) DOM.imgPreview.src = appState.imagePreview;
+        
+        DOM.pipeline?.classList.remove('hidden');
+        document.querySelectorAll('.pipeline-step').forEach(step => {
+            step.classList.remove('pending');
+            step.classList.add('done');
+            if (!step.textContent.includes('✓')) step.textContent += ' ✓';
+        });
+
+        DOM.results?.classList.remove('hidden');
+        DOM.driftPanel?.classList.remove('hidden');
+        DOM.vesselsPanel?.classList.remove('hidden');
+
+        setTimeout(() => {
+            renderMapLayers();
+            updateUIElements();
+            renderEvidenceChain();
+            generateDossier();
+            if (DOM.exportBtn) DOM.exportBtn.disabled = false;
+            if (DOM.btnExportTop) DOM.btnExportTop.disabled = false;
+        }, 100);
+    }
+});
+
+window.addEventListener('beforeunload', () => {
+    sessionStorage.setItem('oceanTraceApp', JSON.stringify(appState));
 });
 
 function initNav() {
@@ -215,25 +262,25 @@ function initNav() {
 
     DOM.btnNewId?.addEventListener('click', generateNewInvestigationId);
     DOM.btnResetAll?.addEventListener('click', resetFullInvestigation);
-    DOM.btnExportTop?.addEventListener('click', () => DOM.exportBtn.click());
+    DOM.btnExportTop?.addEventListener('click', exportDossierReport);
 }
 
 async function generateNewInvestigationId() {
     try {
         const res = await fetch(`${CONFIG.API_BASE_URL}/investigations`, {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ lat: appState.coordinates.lat, lon: appState.coordinates.lon })
         });
         const json = await res.json();
         if (json.success) {
             appState.investigationId = json.data.code;
             appState.dbId = json.data.id;
-            DOM.navInvestigationId.textContent = appState.investigationId;
-            DOM.heroIncidentId.textContent = appState.investigationId;
-            DOM.dossierId.textContent = appState.investigationId;
+            if (DOM.navInvestigationId) DOM.navInvestigationId.textContent = appState.investigationId;
+            if (DOM.heroIncidentId) DOM.heroIncidentId.textContent = appState.investigationId;
+            if (DOM.dossierId) DOM.dossierId.textContent = appState.investigationId;
         }
-    } catch(e) { console.error('Failed to create investigation:', e); }
+    } catch (e) { console.error('Failed to create investigation:', e); }
 }
 
 function initLeafletMap() {
@@ -246,8 +293,8 @@ function initLeafletMap() {
         });
 
 
-        L.tileLayer('https:
-            attribution: '&copy; <a href="https:
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
             subdomains: 'abcd',
             maxZoom: 19
         }).addTo(map);
@@ -387,10 +434,10 @@ async function updateInvestigationLocation(lat, lon) {
         try {
             await fetch(`${CONFIG.API_BASE_URL}/investigations/${appState.dbId}`, {
                 method: 'PATCH',
-                headers: {'Content-Type': 'application/json'},
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ coordinates: { lat, lon } })
             });
-        } catch(e) { console.error(e); }
+        } catch (e) { console.error(e); }
     }
     recalculatePhysicsAndRender();
 }
@@ -685,7 +732,7 @@ function generateVesselsAroundOrigin() {
         },
         {
             id: 'v4',
-            name: 'Target Target-Unverified',
+            name: 'Target: Unverified (AIS Gap)',
             mmsi: 'N/A (AIS Gap)',
             type: 'uncertain',
             sog: 'Est. 10.5 kts',
@@ -712,10 +759,12 @@ function generateVesselsAroundOrigin() {
 
 function recalculateVesselScores() {
     const shift = appState.whatIf.timeShiftHours;
+    // radFactor: extra radius beyond default 8.5km penalizes; smaller radius boosts slightly
     const radFactor = (appState.whatIf.radiusKm - 8.5) * 1.5;
 
     appState.vessels.forEach(v => {
         let newScore = v.baseScore - Math.abs(shift) * 2 - radFactor;
+        // Keep top candidate stable for small time shifts
         if (v.id === 'v1' && Math.abs(shift) <= 3) newScore = Math.max(75, newScore);
         v.score = Math.min(100, Math.max(10, Math.round(newScore)));
     });
@@ -748,7 +797,7 @@ function renderVesselsTable() {
     const filter = appState.sourceType;
     const filtered = appState.vessels.filter(v => filter === 'all' || v.type === filter);
 
-    filtered.sort((a,b) => b.score - a.score);
+    filtered.sort((a, b) => b.score - a.score);
 
     filtered.forEach((v, idx) => {
         const tr = document.createElement('tr');
@@ -847,7 +896,7 @@ function initEnvironmentalControls() {
 
     DOM.sliderWindDir?.addEventListener('input', (e) => {
         appState.environment.windDir = parseInt(e.target.value);
-        DOM.valWindDir.textContent = `${appState.environment.windDir.toString().padStart(3,'0')}°`;
+        DOM.valWindDir.textContent = `${appState.environment.windDir.toString().padStart(3, '0')}°`;
         debouncedPatch({ environment: appState.environment });
     });
 
@@ -859,7 +908,7 @@ function initEnvironmentalControls() {
 
     DOM.sliderCurrentDir?.addEventListener('input', (e) => {
         appState.environment.currentDir = parseInt(e.target.value);
-        DOM.valCurrentDir.textContent = `${appState.environment.currentDir.toString().padStart(3,'0')}°`;
+        DOM.valCurrentDir.textContent = `${appState.environment.currentDir.toString().padStart(3, '0')}°`;
         recalculatePhysicsAndRender();
     });
 
@@ -905,9 +954,43 @@ function initUpload() {
 }
 
 function loadSampleImage() {
-    const svgSample = `data:image/svg+xml;utf8,<svg xmlns="http:
+    // Generate a realistic-looking synthetic SAR image as an inline SVG
+    const svgSample = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+  <defs>
+    <radialGradient id="ocean" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#0a1628"/>
+      <stop offset="100%" stop-color="#030810"/>
+    </radialGradient>
+    <filter id="noise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+  </defs>
+  <rect width="400" height="300" fill="url(#ocean)"/>
+  <rect width="400" height="300" fill="#06101e" filter="url(#noise)" opacity="0.5"/>
+  <!-- Oil slick dark feature -->
+  <ellipse cx="200" cy="160" rx="85" ry="45" fill="#010408" opacity="0.9" transform="rotate(-15,200,160)"/>
+  <ellipse cx="220" cy="150" rx="55" ry="28" fill="#020810" opacity="0.8" transform="rotate(-10,220,150)"/>
+  <!-- Speckle texture -->
+  <rect x="0" y="0" width="400" height="300" fill="none" filter="url(#noise)" opacity="0.3"/>
+  <!-- Lat/lon grid lines -->
+  <line x1="0" y1="100" x2="400" y2="100" stroke="#1a3050" stroke-width="0.5" opacity="0.4"/>
+  <line x1="0" y1="200" x2="400" y2="200" stroke="#1a3050" stroke-width="0.5" opacity="0.4"/>
+  <line x1="133" y1="0" x2="133" y2="300" stroke="#1a3050" stroke-width="0.5" opacity="0.4"/>
+  <line x1="267" y1="0" x2="267" y2="300" stroke="#1a3050" stroke-width="0.5" opacity="0.4"/>
+  <!-- SAR metadata overlay -->
+  <rect x="0" y="0" width="400" height="22" fill="black" opacity="0.7"/>
+  <text x="6" y="14" font-family="monospace" font-size="10" fill="#06b6d4">SENTINEL-1A | SAR C-BAND | IW MODE | 2026-09-13T06:42:17Z</text>
+  <rect x="0" y="278" width="400" height="22" fill="black" opacity="0.7"/>
+  <text x="6" y="292" font-family="monospace" font-size="9" fill="#64748b">19.0760N 72.8777E | RES:10m | PASS:ASC | INCIDENCE:38.2°</text>
+  <!-- Detection bounding box -->
+  <rect x="125" y="110" width="155" height="95" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="5,3" opacity="0.85"/>
+  <text x="127" y="108" font-family="monospace" font-size="8" fill="#f59e0b">OIL_CANDIDATE_001</text>
+</svg>`)}`;
     DOM.imgPreview.src = svgSample;
-    DOM.fileName.textContent = 'Sentinel1A_SAR_20260913_NorthSea.tiff';
+    appState.imagePreview = svgSample;
+    DOM.fileName.textContent = 'Sentinel1A_SAR_20260913_Mumbai.tiff';
     DOM.uploadZone?.classList.add('hidden');
     DOM.previewArea?.classList.remove('hidden');
     DOM.runBtn.disabled = false;
@@ -925,6 +1008,7 @@ async function handleFile(e) {
     const reader = new FileReader();
     reader.onload = (ev) => {
         DOM.imgPreview.src = ev.target.result;
+        appState.imagePreview = ev.target.result;
         DOM.fileName.textContent = file.name;
         DOM.uploadZone?.classList.add('hidden');
         DOM.previewArea?.classList.remove('hidden');
@@ -937,7 +1021,7 @@ async function handleFile(e) {
             await fetch(`${CONFIG.API_BASE_URL}/investigations/${appState.dbId}/upload`, {
                 method: 'POST'
             });
-        } catch(e) { console.error(e); }
+        } catch (e) { console.error(e); }
     }
 }
 
@@ -960,9 +1044,13 @@ function resetUploadState() {
     DOM.driftPanel?.classList.add('hidden');
     DOM.vesselsPanel?.classList.add('hidden');
 
-    DOM.evidenceTimeline.innerHTML = '<div class="empty-state text-muted">Run detection analysis to populate evidence chain steps.</div>';
-    DOM.dossierPreview.innerHTML = '<div class="empty-state text-muted">Dossier summary unavailable until analysis completes.</div>';
-    DOM.exportBtn.disabled = true;
+    if (DOM.evidenceTimeline) {
+        DOM.evidenceTimeline.innerHTML = '<div class="empty-state text-muted">Run detection analysis to populate evidence chain steps.</div>';
+    }
+    if (DOM.dossierPreview) {
+        DOM.dossierPreview.innerHTML = '<div class="empty-state text-muted">Dossier summary unavailable until analysis completes.</div>';
+    }
+    if (DOM.exportBtn) DOM.exportBtn.disabled = true;
 
     renderMapLayers();
 }
@@ -986,7 +1074,7 @@ function initAnalysis() {
             const fakeSceneId = crypto.randomUUID ? crypto.randomUUID() : '00000000-0000-4000-8000-000000000001';
             const res = await fetch(`${CONFIG.API_BASE_URL}/investigations/${appState.dbId}/analyze`, {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ sceneId: fakeSceneId })
             });
             const json = await res.json();
@@ -1013,7 +1101,7 @@ function initAnalysis() {
                 await updateStep('step-ais', 'Correlating AIS telemetry...');
                 appState.vessels = json.data.vessels;
 
-                appState.vessels.forEach((v, i) => { v.id = v.id || `v${i+1}`; v.baseScore = v.score; });
+                appState.vessels.forEach((v, i) => { v.id = v.id || `v${i + 1}`; v.baseScore = v.score; });
                 if (appState.vessels.length > 0) appState.selectedVesselId = appState.vessels[0].id;
 
                 await updateStep('step-evidence', 'Compiling evidence dossier...');
@@ -1052,8 +1140,10 @@ function updateStep(stepId, text) {
 
 function completeAnalysis() {
     appState.analysisComplete = true;
-    DOM.runBtn.textContent = 'Re-Run AI Analysis';
-    DOM.runBtn.disabled = false;
+    if (DOM.runBtn) {
+        DOM.runBtn.textContent = 'Re-Run AI Analysis';
+        DOM.runBtn.disabled = false;
+    }
 
     DOM.results?.classList.remove('hidden');
     DOM.driftPanel?.classList.remove('hidden');
@@ -1063,7 +1153,7 @@ function completeAnalysis() {
     updateUIElements();
     renderEvidenceChain();
     generateDossier();
-    DOM.exportBtn.disabled = false;
+    if (DOM.exportBtn) DOM.exportBtn.disabled = false;
 }
 
 function initEvidence() {
@@ -1071,6 +1161,8 @@ function initEvidence() {
 }
 
 function renderEvidenceChain() {
+    if (!DOM.evidenceTimeline) return;
+
     DOM.evidenceTimeline.innerHTML = '';
     if (!appState.evidenceChain || appState.evidenceChain.length === 0) {
         DOM.evidenceTimeline.innerHTML = '<div class="empty-state text-muted">No evidence chain data returned.</div>';
@@ -1097,16 +1189,16 @@ function renderEvidenceChain() {
     });
 }
 
-function generateEvidenceChain() {
-    renderEvidenceChain();
-}
+// generateEvidenceChain is an alias kept for backward-compat; renderEvidenceChain handles rendering directly.
+const generateEvidenceChain = renderEvidenceChain;
+
 
 function generateDossier() {
     const topCandidate = appState.vessels[0] || { name: 'Candidate Vessel A', mmsi: '235001234', score: 87 };
 
     const dossierData = [
         ['Investigation ID', appState.investigationId],
-        ['Timestamp (UTC)', new Date().toISOString().replace('T',' ').substring(0, 19)],
+        ['Timestamp (UTC)', new Date().toISOString().replace('T', ' ').substring(0, 19)],
         ['Primary Centroid', `${appState.coordinates.lat.toFixed(4)} N, ${appState.coordinates.lon.toFixed(4)} E`],
         ['Primary Sensor', 'Sentinel-1 SAR C-Band'],
         ['Oil Slick Area', '14.8 km²'],
@@ -1123,14 +1215,22 @@ function generateDossier() {
     dossierData.forEach(row => {
         html += `<div class="dossier-row"><strong>${row[0]}</strong> <span class="mono">${row[1]}</span></div>`;
     });
-    DOM.dossierPreview.innerHTML = html;
+    if (DOM.dossierPreview) {
+        DOM.dossierPreview.innerHTML = html;
+    }
 }
 
 async function exportDossierReport() {
     if (!appState.dbId) return;
     try {
-        DOM.exportBtn.textContent = 'Generating...';
-        DOM.exportBtn.disabled = true;
+        if (DOM.exportBtn) {
+            DOM.exportBtn.textContent = 'Generating...';
+            DOM.exportBtn.disabled = true;
+        }
+        if (DOM.btnExportTop) {
+            DOM.btnExportTop.textContent = 'Generating...';
+            DOM.btnExportTop.disabled = true;
+        }
 
         const res = await fetch(`${CONFIG.API_BASE_URL}/investigations/${appState.dbId}/dossier/export`, { method: 'POST' });
         const json = await res.json();
@@ -1140,12 +1240,18 @@ async function exportDossierReport() {
         } else {
             alert('Could not export dossier');
         }
-    } catch(e) {
+    } catch (e) {
         console.error(e);
         alert('Server error generating dossier.');
     } finally {
-        DOM.exportBtn.textContent = 'Export PDF Dossier';
-        DOM.exportBtn.disabled = false;
+        if (DOM.exportBtn) {
+            DOM.exportBtn.textContent = 'Export PDF Dossier';
+            DOM.exportBtn.disabled = false;
+        }
+        if (DOM.btnExportTop) {
+            DOM.btnExportTop.textContent = 'Export Dossier';
+            DOM.btnExportTop.disabled = false;
+        }
     }
 }
 
@@ -1153,10 +1259,16 @@ function updateUIElements() {
     DOM.inputLat.value = appState.coordinates.lat.toFixed(4);
     DOM.inputLon.value = appState.coordinates.lon.toFixed(4);
 
-    document.getElementById('detCentroidVal').textContent = `${appState.coordinates.lat.toFixed(4)}°N, ${appState.coordinates.lon.toFixed(4)}°E`;
+    const detCentroidVal = document.getElementById('detCentroidVal');
+    if (detCentroidVal) {
+        detCentroidVal.textContent = `${appState.coordinates.lat.toFixed(4)}°N, ${appState.coordinates.lon.toFixed(4)}°E`;
+    }
 
     if (appState.origin && typeof appState.origin.lat === 'number') {
-        document.getElementById('originCoordsVal').textContent = `${appState.origin.lat.toFixed(4)}°N, ${appState.origin.lon.toFixed(4)}°E`;
+        const originCoordsVal = document.getElementById('originCoordsVal');
+        if (originCoordsVal) {
+            originCoordsVal.textContent = `${appState.origin.lat.toFixed(4)}°N, ${appState.origin.lon.toFixed(4)}°E`;
+        }
     }
 
     if (appState.analysisComplete) {
@@ -1172,13 +1284,22 @@ function resetFullInvestigation() {
     appState.whatIf = { radiusKm: 8.5, timeShiftHours: 0 };
     appState.timelineHour = 0;
 
-    DOM.sliderWindSpeed.value = 12; DOM.valWindSpeed.textContent = '12 kts';
-    DOM.sliderWindDir.value = 45; DOM.valWindDir.textContent = '045° NE';
-    DOM.sliderCurrentSpeed.value = 0.8; DOM.valCurrentSpeed.textContent = '0.8 m/s';
-    DOM.sliderCurrentDir.value = 30; DOM.valCurrentDir.textContent = '030° NNE';
-    DOM.radiusSlider.value = 8.5; DOM.valRadius.textContent = '8.5 km';
-    DOM.timeShiftSlider.value = 0; DOM.valTimeShift.textContent = '0 hrs';
-    DOM.timeSlider.value = 0; DOM.scrubberTimeDisplay.textContent = 'T - 0h (Detection)';
+    if (DOM.sliderWindSpeed) {
+        DOM.sliderWindSpeed.value = 12;
+        if (DOM.valWindSpeed) DOM.valWindSpeed.textContent = '12 kts';
+        DOM.sliderWindDir.value = 45;
+        if (DOM.valWindDir) DOM.valWindDir.textContent = '045° NE';
+        DOM.sliderCurrentSpeed.value = 0.8;
+        if (DOM.valCurrentSpeed) DOM.valCurrentSpeed.textContent = '0.8 m/s';
+        DOM.sliderCurrentDir.value = 30;
+        if (DOM.valCurrentDir) DOM.valCurrentDir.textContent = '030° NNE';
+        DOM.radiusSlider.value = 8.5;
+        if (DOM.valRadius) DOM.valRadius.textContent = '8.5 km';
+        DOM.timeShiftSlider.value = 0;
+        if (DOM.valTimeShift) DOM.valTimeShift.textContent = '0 hrs';
+        DOM.timeSlider.value = 0;
+        if (DOM.scrubberTimeDisplay) DOM.scrubberTimeDisplay.textContent = 'T - 0h (Detection)';
+    }
 
     resetUploadState();
     if (map) map.setView([19.0760, 72.8777], 10);
@@ -1192,9 +1313,9 @@ function debouncedPatch(payload) {
         try {
             await fetch(`${CONFIG.API_BASE_URL}/investigations/${appState.dbId}`, {
                 method: 'PATCH',
-                headers: {'Content-Type': 'application/json'},
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
-        } catch(e) { console.error('Patch error', e); }
+        } catch (e) { console.error('Patch error', e); }
     }, 500);
 }
