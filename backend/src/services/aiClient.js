@@ -3,7 +3,6 @@ const env = require('../config/env');
 
 const ai = new GoogleGenAI({ apiKey: env.GEMINI_API_KEY });
 
-// Extract text from Gemini SDK v2 response
 function extractText(response) {
   try {
     return response.candidates[0].content.parts[0].text;
@@ -12,14 +11,13 @@ function extractText(response) {
   }
 }
 
-// Call Gemini and parse JSON
 async function callGemini(prompt) {
   const response = await ai.models.generateContent({
     model: 'gemini-2.0-flash',
     contents: prompt
   });
   const text = extractText(response);
-  // Strip markdown code fences if present
+
   const cleaned = text.replace(/```json\n?/gi, '').replace(/```\n?/gi, '').trim();
   return JSON.parse(cleaned);
 }
@@ -53,7 +51,7 @@ Make the confidence between 75-95, areaKm2 between 8-20, slickAgeHours between 1
     return await callGemini(prompt);
   } catch (e) {
     console.error('Detect fallback triggered:', e.message);
-    // Robust fallback
+
     return {
       confidence: 87,
       areaKm2: 14.8,
@@ -86,7 +84,7 @@ The back trajectory should drift southwest given wind direction ${environment.wi
     return await callGemini(prompt);
   } catch (e) {
     console.error('Drift fallback triggered:', e.message);
-    // Physics-based fallback
+
     const windRad = (90 - environment.windDir) * (Math.PI / 180);
     const stepDeg = 0.015;
     const dLat = Math.sin(windRad) * stepDeg;

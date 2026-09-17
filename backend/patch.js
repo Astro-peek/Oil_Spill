@@ -6,18 +6,18 @@ let content = fs.readFileSync(scriptPath, 'utf8');
 
 // 1. App Boot load: add await to generateNewInvestigationId inside DOMContentLoaded
 content = content.replace(
-  "document.addEventListener('DOMContentLoaded', () => {",
-  "document.addEventListener('DOMContentLoaded', async () => {"
+    "document.addEventListener('DOMContentLoaded', () => {",
+    "document.addEventListener('DOMContentLoaded', async () => {"
 );
 content = content.replace(
-  "initNav();\n    initLeafletMap();",
-  "await generateNewInvestigationId();\n    initNav();\n    initLeafletMap();"
+    "initNav();\n    initLeafletMap();",
+    "await generateNewInvestigationId();\n    initNav();\n    initLeafletMap();"
 );
 
 // 2. generateNewInvestigationId -> POST /investigations
 content = content.replace(
-  /function generateNewInvestigationId\(\) \{[\s\S]*?DOM\.dossierId\.textContent = appState\.investigationId;\n\}/g,
-  `async function generateNewInvestigationId() {
+    /function generateNewInvestigationId\(\) \{[\s\S]*?DOM\.dossierId\.textContent = appState\.investigationId;\n\}/g,
+    `async function generateNewInvestigationId() {
     try {
         const res = await fetch(\`\${CONFIG.API_BASE_URL}/investigations\`, {
             method: 'POST',
@@ -38,8 +38,8 @@ content = content.replace(
 
 // 3. updateInvestigationLocation -> PATCH /investigations/:id
 content = content.replace(
-  /function updateInvestigationLocation\(lat, lon\) \{[\s\S]*?recalculatePhysicsAndRender\(\);\n\}/g,
-  `async function updateInvestigationLocation(lat, lon) {
+    /function updateInvestigationLocation\(lat, lon\) \{[\s\S]*?recalculatePhysicsAndRender\(\);\n\}/g,
+    `async function updateInvestigationLocation(lat, lon) {
     appState.coordinates.lat = lat;
     appState.coordinates.lon = lon;
     appState.detection.centroid.lat = lat + 0.005;
@@ -64,8 +64,8 @@ content = content.replace(
 
 // 4. handleFile -> POST /upload
 content = content.replace(
-  /function handleFile\(e\) \{[\s\S]*?reader\.readAsDataURL\(file\);\n\}/g,
-  `async function handleFile(e) {
+    /function handleFile\(e\) \{[\s\S]*?reader\.readAsDataURL\(file\);\n\}/g,
+    `async function handleFile(e) {
     const file = e.target.files[0];
     if (!file) return;
 
@@ -96,8 +96,8 @@ content = content.replace(
 
 // 5. initAnalysis -> POST /analyze
 content = content.replace(
-  /function initAnalysis\(\) \{\n\s+DOM\.runBtn\.addEventListener\('click', async \(\) => \{\n\s+if \(appState\.isProcessing\) return;[\s\S]*?DOM\.pipeline\.classList\.remove\('hidden'\);\n\n\s+try \{[\s\S]*?completeAnalysis\(\);\n\n\s+\} catch \(e\) \{[\s\S]*?\} finally \{[\s\S]*?\}\n\s+\}\);\n\}/g,
-  `function initAnalysis() {
+    /function initAnalysis\(\) \{\n\s+DOM\.runBtn\.addEventListener\('click', async \(\) => \{\n\s+if \(appState\.isProcessing\) return;[\s\S]*?DOM\.pipeline\.classList\.remove\('hidden'\);\n\n\s+try \{[\s\S]*?completeAnalysis\(\);\n\n\s+\} catch \(e\) \{[\s\S]*?\} finally \{[\s\S]*?\}\n\s+\}\);\n\}/g,
+    `function initAnalysis() {
     DOM.runBtn.addEventListener('click', async () => {
         if (appState.isProcessing) return;
         if (DOM.previewArea.classList.contains('hidden')) {
@@ -152,8 +152,8 @@ content = content.replace(
 
 // 6. delete manual recalculatePhysicsAndRender overrides that will destroy API response
 content = content.replace(
-  /function recalculatePhysicsAndRender\(\) \{[\s\S]*?renderMapLayers\(\);\n\s+updateUIElements\(\);\n\}/g,
-  `function recalculatePhysicsAndRender() {
+    /function recalculatePhysicsAndRender\(\) \{[\s\S]*?renderMapLayers\(\);\n\s+updateUIElements\(\);\n\}/g,
+    `function recalculatePhysicsAndRender() {
     renderMapLayers();
     updateUIElements();
 }`
@@ -161,8 +161,8 @@ content = content.replace(
 
 // 7. delete manual generateEvidenceChain overrides
 content = content.replace(
-  /function generateEvidenceChain\(\) \{[\s\S]*?\}\n\s+div>\n\s+`;\n\s+\}\);\n\}/g,
-  `function generateEvidenceChain() {
+    /function generateEvidenceChain\(\) \{[\s\S]*?\}\n\s+div>\n\s+`;\n\s+\}\);\n\}/g,
+    `function generateEvidenceChain() {
     DOM.evidenceTimeline.innerHTML = '';
     appState.evidenceChain.forEach(item => {
         DOM.evidenceTimeline.innerHTML += \`
@@ -181,8 +181,8 @@ content = content.replace(
 
 // 8. exportDossierReport -> POST /dossier/export
 content = content.replace(
-  /function exportDossierReport\(\) \{[\s\S]*?URL\.revokeObjectURL\(url\);\n\}/g,
-  `async function exportDossierReport() {
+    /function exportDossierReport\(\) \{[\s\S]*?URL\.revokeObjectURL\(url\);\n\}/g,
+    `async function exportDossierReport() {
     if (!appState.dbId) return;
     try {
         DOM.exportBtn.textContent = 'Generating...';
@@ -208,15 +208,15 @@ content = content.replace(
 
 // Also tie in the environment sliders patching
 content = content.replace(
-  /appState\.environment\.windSpeed = parseInt\(e\.target\.value\);\n\s+DOM\.valWindSpeed\.textContent = \`\$\{appState\.environment\.windSpeed\} kts\`;\n\s+recalculatePhysicsAndRender\(\);/g,
-  `appState.environment.windSpeed = parseInt(e.target.value);
+    /appState\.environment\.windSpeed = parseInt\(e\.target\.value\);\n\s+DOM\.valWindSpeed\.textContent = \`\$\{appState\.environment\.windSpeed\} kts\`;\n\s+recalculatePhysicsAndRender\(\);/g,
+    `appState.environment.windSpeed = parseInt(e.target.value);
         DOM.valWindSpeed.textContent = \`\${appState.environment.windSpeed} kts\`;
         debouncedPatch({ environment: appState.environment });`
 );
 
 content = content.replace(
-  /appState\.environment\.windDir = parseInt\(e\.target\.value\);\n\s+DOM\.valWindDir\.textContent = \`\$\{appState\.environment\.windDir\.toString\(\)\.padStart\(3,'0'\)\}\°\`;\n\s+recalculatePhysicsAndRender\(\);/g,
-  `appState.environment.windDir = parseInt(e.target.value);
+    /appState\.environment\.windDir = parseInt\(e\.target\.value\);\n\s+DOM\.valWindDir\.textContent = \`\$\{appState\.environment\.windDir\.toString\(\)\.padStart\(3,'0'\)\}\°\`;\n\s+recalculatePhysicsAndRender\(\);/g,
+    `appState.environment.windDir = parseInt(e.target.value);
         DOM.valWindDir.textContent = \`\${appState.environment.windDir.toString().padStart(3,'0')}°\`;
         debouncedPatch({ environment: appState.environment });`
 );

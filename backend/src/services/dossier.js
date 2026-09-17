@@ -19,20 +19,20 @@ async function generateAndUploadDossier(investigation, details) {
            .upload(storagePath, pdfData, {
              contentType: 'application/pdf'
            });
-           
+
          if (error) {
            console.error("Storage upload error:", error);
-           // mock returning a fake url so app works even without buckets created
+
            return resolve({ dossierId: "fake-id", downloadUrl: "about:blank" });
          }
-         
+
          const { data: signedUrlData, error: signedUrlError } = await supabase.storage
            .from(env.SUPABASE_STORAGE_BUCKET_DOSSIERS)
            .createSignedUrl(storagePath, 60 * 60);
 
          const url = signedUrlData ? signedUrlData.signedUrl : "about:blank";
 
-         // create dossiers row
+
          const { data: dbData, error: dbError } = await supabase
             .from('dossiers')
             .insert({
@@ -45,7 +45,7 @@ async function generateAndUploadDossier(investigation, details) {
          resolve({ dossierId: dbData ? dbData.id : "fake-id", downloadUrl: url });
       } catch (err) {
         console.error("Dossier error:", err);
-        // fallback to fake response so it doesn't crash during hackathon demo
+
         resolve({ dossierId: "fake-id", downloadUrl: "about:blank" });
       }
     });
@@ -55,7 +55,7 @@ async function generateAndUploadDossier(investigation, details) {
     doc.fontSize(12).text(`Investigation ID: ${investigation.code}`);
     doc.text(`Location: ${investigation.lat}, ${investigation.lon}`);
     doc.moveDown();
-    
+
     doc.fontSize(16).text('Top Candidates');
     doc.moveDown();
     if (details.suspects) {

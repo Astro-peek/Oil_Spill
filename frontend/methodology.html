@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OceanTrace | Marine Intelligence Command Center</title>
+    <meta name="description" content="AI-Powered Marine Oil Spill Detection & Vessel Attribution by OceanSentinel (SIH 2026 - Problem Statement 26143)">
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="brand">
+                <span class="brand-name">OceanTrace</span>
+                <span class="badge badge-demo ml-2">DEMO ENVIRONMENT</span>
+            </div>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="nav-links" id="navLinks">
+                <a href="index.html">Overview</a>
+                <a href="command-center.html">Command Center</a>
+                <a href="evidence.html">Evidence</a>
+                <a href="methodology.html">Methodology</a>
+                <a href="methodology.html#references">References</a>
+
+                <div class="nav-investigation-badge">
+                    <span class="text-xs text-muted">ID:</span>
+                    <span class="mono text-teal bold" id="navInvestigationId">OT-2026-0913-001</span>
+                    <button class="btn-text text-xs text-muted" id="btnNewId" title="Generate New Investigation ID">↻ New</button>
+                </div>
+
+                <button class="cta-primary nav-cta" id="navLaunchBtn">Launch Analysis</button>
+            </div>
+        </div>
+    </nav>
+
+
+    <section class="system-status">
+        <div class="status-container">
+            <div class="status-item"><span class="status-label">SYSTEM</span> <span class="status-value highlight-warning">Demo Environment</span></div>
+            <div class="status-item"><span class="status-label">SATELLITE</span> <span class="status-value">Sentinel-1 SAR C-Band</span></div>
+            <div class="status-item"><span class="status-label">OPTICAL</span> <span class="status-value">Sentinel-2 EO</span></div>
+            <div class="status-item"><span class="status-label">WIND</span> <span class="status-value">ERA5 Reanalysis</span></div>
+            <div class="status-item"><span class="status-label">OCEAN</span> <span class="status-value">Copernicus CMEMS</span></div>
+            <div class="status-item"><span class="status-label">VESSEL</span> <span class="status-value">AIS Telemetry</span></div>
+        </div>
+    </section>
+
+
+    <section class="methodology-section" id="methodology">
+        <div class="section-container">
+            <h2 class="section-title">Technical Methodology & Architecture</h2>
+            <div class="method-grid">
+                <div class="method-card">
+                    <h4>01 / Satellite Layer</h4>
+                    <p>Fuses Sentinel-1 SAR dampening anomalies and Sentinel-2 EO imagery for robust all-weather detection.</p>
+                </div>
+                <div class="method-card">
+                    <h4>02 / AI Segmentation</h4>
+                    <p>Deep neural network segmentation model isolates dark ocean features and computes geometry metrics.</p>
+                </div>
+                <div class="method-card">
+                    <h4>03 / Validation Engine</h4>
+                    <p>Cross-references wind vectors (ERA5) and ocean currents (CMEMS) to rule out biogenic and low-wind look-alikes.</p>
+                </div>
+                <div class="method-card">
+                    <h4>04 / Lagrangian Drift</h4>
+                    <p>Advects slick particles backwards in time using leeway factor vector mathematics to delineate origin envelope.</p>
+                </div>
+                <div class="method-card">
+                    <h4>05 / AIS Correlation</h4>
+                    <p>Filters spatiotemporal vessel trajectories against release window to identify candidate targets.</p>
+                </div>
+                <div class="method-card">
+                    <h4>06 / Probabilistic Attribution</h4>
+                    <p>Multi-factor scoring algorithm balances proximity, speed anomalies, draft changes, and AIS continuity.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="references-section" id="references">
+        <div class="section-container">
+            <h2 class="section-title">Authoritative Scientific Data Sources</h2>
+            <div class="ref-grid">
+                <a href="https://www.itopf.org/knowledge-resources/data-statistics/statistics/" target="_blank" rel="noopener noreferrer" class="ref-card">
+                    <h4>ITOPF</h4>
+                    <span class="ref-desc">Oil Tanker Spill Statistics Report 2025</span>
+                </a>
+                <a href="https://www.imo.org/en/About/Conventions/Pages/International-Convention-for-the-Prevention-of-Pollution-from-Ships-(MARPOL).aspx" target="_blank" rel="noopener noreferrer" class="ref-card">
+                    <h4>IMO</h4>
+                    <span class="ref-desc">MARPOL Annex I Regulations & Vessel Registry</span>
+                </a>
+                <a href="https://incidentnews.noaa.gov/" target="_blank" rel="noopener noreferrer" class="ref-card">
+                    <h4>NOAA IncidentNews</h4>
+                    <span class="ref-desc">MarineCadastre AIS & Spill Historical Records</span>
+                </a>
+                <a href="https://dataspace.copernicus.eu/" target="_blank" rel="noopener noreferrer" class="ref-card">
+                    <h4>Copernicus Data Space</h4>
+                    <span class="ref-desc">Sentinel-1 SAR & Sentinel-2 Optical Imagery</span>
+                </a>
+                <a href="https://www.ecmwf.int/en/forecasts/dataset/ecmwf-reanalysis-v5" target="_blank" rel="noopener noreferrer" class="ref-card">
+                    <h4>ECMWF ERA5</h4>
+                    <span class="ref-desc">Hourly Surface Wind & Meteorological Reanalysis</span>
+                </a>
+                <a href="https://marine.copernicus.eu/" target="_blank" rel="noopener noreferrer" class="ref-card">
+                    <h4>Copernicus CMEMS</h4>
+                    <span class="ref-desc">Global Ocean Physics & Velocity Currents</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="footer">
+        <div class="section-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h2 class="brand-name">OceanTrace</h2>
+                    <p>AI-Powered Marine Oil Spill Detection & Vessel Attribution Platform</p>
+                    <p class="org-name mt-2"><strong>Team OceanSentinel</strong></p>
+                    <p class="mt-2 text-sm">Smart India Hackathon 2026 &bull; Problem Statement 26143</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <a href="index.html">Overview</a>
+                    <a href="command-center.html">Command Center</a>
+                    <a href="evidence.html">Evidence Dossier</a>
+                </div>
+            </div>
+
+            <div class="footer-bottom mt-6">
+                <div class="disclaimer">
+                    <strong>Legal & Operational Disclaimer:</strong> OceanTrace is a decision-support analytical interface. Candidate vessel attribution is probabilistic and must be corroborated by authoritative regulatory and physical evidence prior to enforcement or legal proceeding. Demonstration telemetry is simulated for evaluation purposes.
+                </div>
+                <p class="text-sm mt-4 text-muted">&copy; 2026 Team OceanSentinel. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OceanTrace | Marine Intelligence Command Center</title>
+    <meta name="description" content="AI-Powered Marine Oil Spill Detection & Vessel Attribution by OceanSentinel (SIH 2026 - Problem Statement 26143)">
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="brand">
+                <span class="brand-name">OceanTrace</span>
+                <span class="badge badge-demo ml-2">DEMO ENVIRONMENT</span>
+            </div>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="nav-links" id="navLinks">
+                <a href="index.html">Overview</a>
+                <a href="command-center.html">Command Center</a>
+                <a href="evidence.html">Evidence</a>
+                <a href="methodology.html">Methodology</a>
+                <a href="methodology.html#references">References</a>
+
+                <div class="nav-investigation-badge">
+                    <span class="text-xs text-muted">ID:</span>
+                    <span class="mono text-teal bold" id="navInvestigationId">OT-2026-0913-001</span>
+                    <button class="btn-text text-xs text-muted" id="btnNewId" title="Generate New Investigation ID">↻ New</button>
+                </div>
+
+                <button class="cta-primary nav-cta" id="navLaunchBtn">Launch Analysis</button>
+            </div>
+        </div>
+    </nav>
+
+
+    <section class="system-status">
+        <div class="status-container">
+            <div class="status-item"><span class="status-label">SYSTEM</span> <span class="status-value highlight-warning">Demo Environment</span></div>
+            <div class="status-item"><span class="status-label">SATELLITE</span> <span class="status-value">Sentinel-1 SAR C-Band</span></div>
+            <div class="status-item"><span class="status-label">OPTICAL</span> <span class="status-value">Sentinel-2 EO</span></div>
+            <div class="status-item"><span class="status-label">WIND</span> <span class="status-value">ERA5 Reanalysis</span></div>
+            <div class="status-item"><span class="status-label">OCEAN</span> <span class="status-value">Copernicus CMEMS</span></div>
+            <div class="status-item"><span class="status-label">VESSEL</span> <span class="status-value">AIS Telemetry</span></div>
+        </div>
+    </section>
+
+
+    <section class="evidence-section" id="evidence">
+        <div class="section-container">
+            <h2 class="section-title">Evidence Chain & Incident Dossier</h2>
+
+            <div class="evidence-layout">
+
+                <div class="evidence-timeline" id="evidenceTimeline">
+                    <div class="empty-state text-muted">Run detection analysis to populate evidence chain steps.</div>
+                </div>
+
+
+                <div class="dossier-panel">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3>Evidence Dossier Summary</h3>
+                            <span class="mono text-xs text-muted" id="dossierId">OT-2026-0913-001</span>
+                        </div>
+                        <div class="panel-content dossier-content" id="dossierPreview">
+                            <div class="empty-state text-muted">Dossier summary unavailable until analysis completes.</div>
+                        </div>
+                        <div class="panel-footer">
+                            <button class="cta-primary full-width" id="exportBtn" disabled>Export Evidence Summary (.txt)</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="footer">
+        <div class="section-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h2 class="brand-name">OceanTrace</h2>
+                    <p>AI-Powered Marine Oil Spill Detection & Vessel Attribution Platform</p>
+                    <p class="org-name mt-2"><strong>Team OceanSentinel</strong></p>
+                    <p class="mt-2 text-sm">Smart India Hackathon 2026 &bull; Problem Statement 26143</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <a href="index.html">Overview</a>
+                    <a href="command-center.html">Command Center</a>
+                    <a href="evidence.html">Evidence Dossier</a>
+                </div>
+            </div>
+
+            <div class="footer-bottom mt-6">
+                <div class="disclaimer">
+                    <strong>Legal & Operational Disclaimer:</strong> OceanTrace is a decision-support analytical interface. Candidate vessel attribution is probabilistic and must be corroborated by authoritative regulatory and physical evidence prior to enforcement or legal proceeding. Demonstration telemetry is simulated for evaluation purposes.
+                </div>
+                <p class="text-sm mt-4 text-muted">&copy; 2026 Team OceanSentinel. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+
+    <script src="script.js"></script>
+</body>
+</html>
