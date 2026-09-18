@@ -79,11 +79,14 @@ exports.patch = async (req, res, next) => {
 
 exports.upload = async (req, res, next) => {
   try {
+    if (!req.file) {
+      throw new Error("No file uploaded");
+    }
     res.json({
       success: true,
       data: {
-        sceneId: "fake-uuid-not-used-much",
-        storagePath: "satellite-scenes/fake-path.tiff",
+        sceneId: req.file.path,
+        storagePath: req.file.path,
         publicUrl: "n/a"
       }
     });
@@ -94,13 +97,8 @@ exports.analyze = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-
     const { data: inv, error: invError } = await supabase.from('investigations').select().eq('id', id).single();
     if (invError) throw invError;
-
-
-    const detection = await ai.detect("mock-url", inv.lat, inv.lon);
-
 
     const environment = inv.environment || {
       windSpeed: 12,
@@ -108,25 +106,16 @@ exports.analyze = async (req, res, next) => {
       currentSpeed: 0.4,
       currentDir: 180
     };
-    const drift = await ai.calculateDrift(detection.centroid, detection.slickAgeHours, environment, 48);
 
-
-    const releaseWindow = { start: "2026-09-12T00:00:00Z", end: "2026-09-12T18:00:00Z" };
-    const candidates = await ai.correlate(drift.origin, releaseWindow, inv.what_if);
-
-
-    const evidenceChain = [
-      { event_type: "success", occurred_label: "T-0h", title: "Anomaly Detected", description: "Spill detected near location.", source: "AI" },
-      { event_type: "warning", occurred_label: "T-2h", title: "Correlation", description: candidates[0]?.name + " in origin radius.", source: "AIS" }
-    ];
+    const result = await ai.runFullPipeline(inv.lat, inv.lon, environment, req.body.sceneId);
 
     res.json({
       success: true,
       data: {
-        detection,
-        drift,
-        vessels: candidates,
-        evidenceChain
+        detection: result.detection,
+        drift: result.drift,
+        vessels: result.vessels,
+        evidenceChain: result.evidenceChain
       }
     });
   } catch (err) { next(err); }
