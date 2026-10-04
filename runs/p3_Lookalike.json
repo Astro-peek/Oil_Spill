@@ -1,0 +1,1748 @@
+[
+ {
+  "image": "00000.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0278
+ },
+ {
+  "image": "00001.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   8.71,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 11,
+  "total_area_km2": 149.5166,
+  "largest_area_km2": 147.842,
+  "centroid_lon": -89.169782,
+  "centroid_lat": 29.422835,
+  "max_prob": 0.9991
+ },
+ {
+  "image": "00002.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0343
+ },
+ {
+  "image": "00003.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   8.1,
+   9.93
+  ],
+  "detected": false,
+  "n_slicks": 0,
+  "total_area_km2": 0,
+  "largest_area_km2": 0.0,
+  "centroid_lon": null,
+  "centroid_lat": null,
+  "max_prob": 0.7854
+ },
+ {
+  "image": "00004.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0855
+ },
+ {
+  "image": "00005.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   7.34,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 2,
+  "total_area_km2": 92.2166,
+  "largest_area_km2": 92.1473,
+  "centroid_lon": 9.738415,
+  "centroid_lat": 42.75188,
+  "max_prob": 1.0
+ },
+ {
+  "image": "00006.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   7.36,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 1,
+  "total_area_km2": 171.5476,
+  "largest_area_km2": 171.5476,
+  "centroid_lon": 9.789714,
+  "centroid_lat": 42.612295,
+  "max_prob": 1.0
+ },
+ {
+  "image": "00007.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   9.45,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 4,
+  "total_area_km2": 2.5068,
+  "largest_area_km2": 1.3154,
+  "centroid_lon": 38.148956,
+  "centroid_lat": 19.059009,
+  "max_prob": 0.9888
+ },
+ {
+  "image": "00008.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   9.46,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 9,
+  "total_area_km2": 72.6191,
+  "largest_area_km2": 65.6594,
+  "centroid_lon": 38.160832,
+  "centroid_lat": 18.892419,
+  "max_prob": 0.9995
+ },
+ {
+  "image": "00009.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.019
+ },
+ {
+  "image": "00010.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.2241
+ },
+ {
+  "image": "00011.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   9.89,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 16,
+  "total_area_km2": 86.5018,
+  "largest_area_km2": 80.583,
+  "centroid_lon": 114.684529,
+  "centroid_lat": -8.599173,
+  "max_prob": 1.0
+ },
+ {
+  "image": "00012.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   9.88,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 4,
+  "total_area_km2": 2.5902,
+  "largest_area_km2": 1.3732,
+  "centroid_lon": 114.626477,
+  "centroid_lat": -8.716916,
+  "max_prob": 0.9785
+ },
+ {
+  "image": "00013.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   6.92,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 2,
+  "total_area_km2": 99.1924,
+  "largest_area_km2": 99.0858,
+  "centroid_lon": -124.216672,
+  "centroid_lat": 46.186454,
+  "max_prob": 0.9995
+ },
+ {
+  "image": "00014.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   6.94,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 1,
+  "total_area_km2": 181.0418,
+  "largest_area_km2": 181.0418,
+  "centroid_lon": -124.197761,
+  "centroid_lat": 46.048325,
+  "max_prob": 1.0
+ },
+ {
+  "image": "00015.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   7.36,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 10,
+  "total_area_km2": 6.028,
+  "largest_area_km2": 3.8789,
+  "centroid_lon": 9.881534,
+  "centroid_lat": 42.571291,
+  "max_prob": 0.9976
+ },
+ {
+  "image": "00016.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   7.38,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 4,
+  "total_area_km2": 126.5765,
+  "largest_area_km2": 125.9514,
+  "centroid_lon": 9.91729,
+  "centroid_lat": 42.418939,
+  "max_prob": 0.9995
+ },
+ {
+  "image": "00017.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   9.46,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 4,
+  "total_area_km2": 2.1671,
+  "largest_area_km2": 1.2592,
+  "centroid_lon": 38.350288,
+  "centroid_lat": 18.853772,
+  "max_prob": 0.9817
+ },
+ {
+  "image": "00018.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   9.27,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 1,
+  "total_area_km2": 3.3871,
+  "largest_area_km2": 3.3871,
+  "centroid_lon": 38.882556,
+  "centroid_lat": 22.020584,
+  "max_prob": 0.9987
+ },
+ {
+  "image": "00019.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0182
+ },
+ {
+  "image": "00020.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   9.28,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 4,
+  "total_area_km2": 1.4662,
+  "largest_area_km2": 1.0602,
+  "centroid_lon": 38.98091,
+  "centroid_lat": 21.842802,
+  "max_prob": 0.972
+ },
+ {
+  "image": "00021.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   9.29,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 4,
+  "total_area_km2": 1.107,
+  "largest_area_km2": 0.7912,
+  "centroid_lon": 38.962363,
+  "centroid_lat": 21.749688,
+  "max_prob": 0.9713
+ },
+ {
+  "image": "00022.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   7.32,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 17,
+  "total_area_km2": 14.0707,
+  "largest_area_km2": 6.9306,
+  "centroid_lon": 10.129254,
+  "centroid_lat": 42.896988,
+  "max_prob": 0.999
+ },
+ {
+  "image": "00023.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.1935
+ },
+ {
+  "image": "00024.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.3614
+ },
+ {
+  "image": "00025.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   6.98,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 5,
+  "total_area_km2": 174.9846,
+  "largest_area_km2": 174.5978,
+  "centroid_lon": -124.088577,
+  "centroid_lat": 45.697959,
+  "max_prob": 0.999
+ },
+ {
+  "image": "00026.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   9.46,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 5,
+  "total_area_km2": 1.0516,
+  "largest_area_km2": 0.4815,
+  "centroid_lon": 38.578989,
+  "centroid_lat": 18.85531,
+  "max_prob": 0.9795
+ },
+ {
+  "image": "00027.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   7.41,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 4,
+  "total_area_km2": 1.5449,
+  "largest_area_km2": 0.706,
+  "centroid_lon": 10.105546,
+  "centroid_lat": 42.158577,
+  "max_prob": 0.9857
+ },
+ {
+  "image": "00028.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0077
+ },
+ {
+  "image": "00029.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.3271
+ },
+ {
+  "image": "00030.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   9.31,
+   9.93
+  ],
+  "detected": false,
+  "n_slicks": 0,
+  "total_area_km2": 0,
+  "largest_area_km2": 0.0,
+  "centroid_lon": null,
+  "centroid_lat": null,
+  "max_prob": 0.6115
+ },
+ {
+  "image": "00031.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.1106
+ },
+ {
+  "image": "00032.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   9.32,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 37,
+  "total_area_km2": 27.6483,
+  "largest_area_km2": 11.4277,
+  "centroid_lon": 39.174562,
+  "centroid_lat": 21.214271,
+  "max_prob": 0.9976
+ },
+ {
+  "image": "00033.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   9.33,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 2,
+  "total_area_km2": 4.3348,
+  "largest_area_km2": 4.2759,
+  "centroid_lon": 39.197059,
+  "centroid_lat": 21.071858,
+  "max_prob": 0.9966
+ },
+ {
+  "image": "00034.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   7.38,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 5,
+  "total_area_km2": 7.5933,
+  "largest_area_km2": 6.6921,
+  "centroid_lon": 10.268598,
+  "centroid_lat": 42.357255,
+  "max_prob": 0.9993
+ },
+ {
+  "image": "00035.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   7.39,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 1,
+  "total_area_km2": 0.2293,
+  "largest_area_km2": 0.2293,
+  "centroid_lon": 10.279201,
+  "centroid_lat": 42.31933,
+  "max_prob": 0.9701
+ },
+ {
+  "image": "00036.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0378
+ },
+ {
+  "image": "00037.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   6.87,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 3,
+  "total_area_km2": 112.7579,
+  "largest_area_km2": 103.2743,
+  "centroid_lon": -4.17406,
+  "centroid_lat": 46.596298,
+  "max_prob": 0.9995
+ },
+ {
+  "image": "00038.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0251
+ },
+ {
+  "image": "00039.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   6.88,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 3,
+  "total_area_km2": 30.6383,
+  "largest_area_km2": 30.3887,
+  "centroid_lon": -4.139983,
+  "centroid_lat": 46.509296,
+  "max_prob": 1.0
+ },
+ {
+  "image": "00040.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.1981
+ },
+ {
+  "image": "00041.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0053
+ },
+ {
+  "image": "00042.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0463
+ },
+ {
+  "image": "00043.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   6.98,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 6,
+  "total_area_km2": 82.7068,
+  "largest_area_km2": 81.7895,
+  "centroid_lon": -124.441395,
+  "centroid_lat": 45.761808,
+  "max_prob": 1.0
+ },
+ {
+  "image": "00044.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.3024
+ },
+ {
+  "image": "00045.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   7.41,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 2,
+  "total_area_km2": 0.3788,
+  "largest_area_km2": 0.2469,
+  "centroid_lon": 10.431798,
+  "centroid_lat": 42.194748,
+  "max_prob": 0.9656
+ },
+ {
+  "image": "00046.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   7.4,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 6,
+  "total_area_km2": 90.4845,
+  "largest_area_km2": 89.9368,
+  "centroid_lon": 10.558671,
+  "centroid_lat": 42.260546,
+  "max_prob": 1.0
+ },
+ {
+  "image": "00047.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.3947
+ },
+ {
+  "image": "00048.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   6.86,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 4,
+  "total_area_km2": 166.1411,
+  "largest_area_km2": 159.8019,
+  "centroid_lon": -4.023334,
+  "centroid_lat": 46.58151,
+  "max_prob": 0.9995
+ },
+ {
+  "image": "00049.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   7.42,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 10,
+  "total_area_km2": 2.1937,
+  "largest_area_km2": 1.0441,
+  "centroid_lon": 10.66958,
+  "centroid_lat": 42.1428,
+  "max_prob": 0.9988
+ },
+ {
+  "image": "00050.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   6.89,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 6,
+  "total_area_km2": 120.2242,
+  "largest_area_km2": 102.138,
+  "centroid_lon": -4.003395,
+  "centroid_lat": 46.46768,
+  "max_prob": 0.9995
+ },
+ {
+  "image": "00051.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   6.9,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 1,
+  "total_area_km2": 36.6261,
+  "largest_area_km2": 36.6261,
+  "centroid_lon": -4.017187,
+  "centroid_lat": 46.352304,
+  "max_prob": 1.0
+ },
+ {
+  "image": "00052.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   6.93,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 4,
+  "total_area_km2": 125.865,
+  "largest_area_km2": 122.419,
+  "centroid_lon": -3.989516,
+  "centroid_lat": 46.094899,
+  "max_prob": 0.9995
+ },
+ {
+  "image": "00053.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   6.95,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 5,
+  "total_area_km2": 37.9296,
+  "largest_area_km2": 37.5233,
+  "centroid_lon": -3.967616,
+  "centroid_lat": 46.010954,
+  "max_prob": 0.9995
+ },
+ {
+  "image": "00054.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   7.34,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 8,
+  "total_area_km2": 72.9312,
+  "largest_area_km2": 66.7212,
+  "centroid_lon": 10.665384,
+  "centroid_lat": 42.764224,
+  "max_prob": 0.9995
+ },
+ {
+  "image": "00055.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   6.98,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 2,
+  "total_area_km2": 82.6442,
+  "largest_area_km2": 82.5763,
+  "centroid_lon": -124.294518,
+  "centroid_lat": 45.746826,
+  "max_prob": 0.9998
+ },
+ {
+  "image": "00056.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   7.38,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 2,
+  "total_area_km2": 1.4798,
+  "largest_area_km2": 0.795,
+  "centroid_lon": 10.72576,
+  "centroid_lat": 42.415971,
+  "max_prob": 0.988
+ },
+ {
+  "image": "00057.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   7.4,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 6,
+  "total_area_km2": 27.4413,
+  "largest_area_km2": 26.4844,
+  "centroid_lon": 10.740032,
+  "centroid_lat": 42.272991,
+  "max_prob": 0.9995
+ },
+ {
+  "image": "00058.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   6.86,
+   9.93
+  ],
+  "detected": false,
+  "n_slicks": 0,
+  "total_area_km2": 0,
+  "largest_area_km2": 0.0,
+  "centroid_lon": null,
+  "centroid_lat": null,
+  "max_prob": 0.781
+ },
+ {
+  "image": "00059.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   6.87,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 1,
+  "total_area_km2": 1.6025,
+  "largest_area_km2": 1.6025,
+  "centroid_lon": -3.921958,
+  "centroid_lat": 46.602366,
+  "max_prob": 0.9595
+ },
+ {
+  "image": "00060.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.1797
+ },
+ {
+  "image": "00061.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   6.89,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 4,
+  "total_area_km2": 57.5332,
+  "largest_area_km2": 33.2134,
+  "centroid_lon": -3.868711,
+  "centroid_lat": 46.482234,
+  "max_prob": 0.9967
+ },
+ {
+  "image": "00062.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   6.91,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 7,
+  "total_area_km2": 69.4266,
+  "largest_area_km2": 38.1456,
+  "centroid_lon": -3.82463,
+  "centroid_lat": 46.2644,
+  "max_prob": 0.999
+ },
+ {
+  "image": "00063.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   6.93,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 6,
+  "total_area_km2": 152.1302,
+  "largest_area_km2": 148.4082,
+  "centroid_lon": -3.839582,
+  "centroid_lat": 46.072092,
+  "max_prob": 0.9991
+ },
+ {
+  "image": "00064.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   6.95,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 5,
+  "total_area_km2": 139.1741,
+  "largest_area_km2": 138.346,
+  "centroid_lon": -3.811958,
+  "centroid_lat": 45.981767,
+  "max_prob": 1.0
+ },
+ {
+  "image": "00065.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   6.97,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 4,
+  "total_area_km2": 92.6367,
+  "largest_area_km2": 83.2719,
+  "centroid_lon": -124.070236,
+  "centroid_lat": 45.828373,
+  "max_prob": 0.9994
+ },
+ {
+  "image": "00066.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   5.05,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 9,
+  "total_area_km2": 4.9399,
+  "largest_area_km2": 3.432,
+  "centroid_lon": 21.930027,
+  "centroid_lat": 59.644945,
+  "max_prob": 0.9918
+ },
+ {
+  "image": "00067.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   7.39,
+   9.93
+  ],
+  "detected": false,
+  "n_slicks": 0,
+  "total_area_km2": 0,
+  "largest_area_km2": 0.0,
+  "centroid_lon": null,
+  "centroid_lat": null,
+  "max_prob": 0.9197
+ },
+ {
+  "image": "00068.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0127
+ },
+ {
+  "image": "00069.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0518
+ },
+ {
+  "image": "00070.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.3119
+ },
+ {
+  "image": "00071.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0322
+ },
+ {
+  "image": "00072.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.2105
+ },
+ {
+  "image": "00073.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0434
+ },
+ {
+  "image": "00074.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.3384
+ },
+ {
+  "image": "00075.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0879
+ },
+ {
+  "image": "00076.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   5.05,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 11,
+  "total_area_km2": 13.1544,
+  "largest_area_km2": 11.2302,
+  "centroid_lon": 22.102615,
+  "centroid_lat": 59.620947,
+  "max_prob": 0.9978
+ },
+ {
+  "image": "00077.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   7.02,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 13,
+  "total_area_km2": 32.5464,
+  "largest_area_km2": 28.8529,
+  "centroid_lon": -3.669355,
+  "centroid_lat": 45.46707,
+  "max_prob": 0.9993
+ },
+ {
+  "image": "00078.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   7.03,
+   9.93
+  ],
+  "detected": false,
+  "n_slicks": 0,
+  "total_area_km2": 0,
+  "largest_area_km2": 0.0,
+  "centroid_lon": null,
+  "centroid_lat": null,
+  "max_prob": 0.5232
+ },
+ {
+  "image": "00079.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.1674
+ },
+ {
+  "image": "00080.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0408
+ },
+ {
+  "image": "00081.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.1636
+ },
+ {
+  "image": "00082.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.087
+ },
+ {
+  "image": "00083.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0848
+ },
+ {
+  "image": "00084.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.3368
+ },
+ {
+  "image": "00085.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.1869
+ },
+ {
+  "image": "00086.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   5.06,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 2,
+  "total_area_km2": 1.2703,
+  "largest_area_km2": 1.0756,
+  "centroid_lon": 22.166449,
+  "centroid_lat": 59.619736,
+  "max_prob": 0.9922
+ },
+ {
+  "image": "00087.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   7.01,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 21,
+  "total_area_km2": 11.3755,
+  "largest_area_km2": 4.8342,
+  "centroid_lon": -3.550102,
+  "centroid_lat": 45.452772,
+  "max_prob": 0.9995
+ },
+ {
+  "image": "00088.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0258
+ },
+ {
+  "image": "00089.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0417
+ },
+ {
+  "image": "00090.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   5.05,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 8,
+  "total_area_km2": 27.7923,
+  "largest_area_km2": 26.8973,
+  "centroid_lon": 22.415738,
+  "centroid_lat": 59.635395,
+  "max_prob": 0.999
+ },
+ {
+  "image": "00091.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   5.07,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 6,
+  "total_area_km2": 59.6417,
+  "largest_area_km2": 21.7486,
+  "centroid_lon": 22.432082,
+  "centroid_lat": 59.51002,
+  "max_prob": 0.9995
+ },
+ {
+  "image": "00092.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.3353
+ },
+ {
+  "image": "00093.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0277
+ },
+ {
+  "image": "00094.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   5.05,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 3,
+  "total_area_km2": 56.7846,
+  "largest_area_km2": 32.5915,
+  "centroid_lon": 22.627792,
+  "centroid_lat": 59.64478,
+  "max_prob": 0.999
+ },
+ {
+  "image": "00095.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   5.07,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 6,
+  "total_area_km2": 63.9798,
+  "largest_area_km2": 42.1213,
+  "centroid_lon": 22.585032,
+  "centroid_lat": 59.510527,
+  "max_prob": 0.9995
+ },
+ {
+  "image": "00096.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.2433
+ },
+ {
+  "image": "00097.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   5.03,
+   9.93
+  ],
+  "detected": false,
+  "n_slicks": 0,
+  "total_area_km2": 0,
+  "largest_area_km2": 0.0,
+  "centroid_lon": null,
+  "centroid_lat": null,
+  "max_prob": 0.8403
+ },
+ {
+  "image": "00098.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   5.05,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 5,
+  "total_area_km2": 53.5875,
+  "largest_area_km2": 53.2891,
+  "centroid_lon": 22.823937,
+  "centroid_lat": 59.640508,
+  "max_prob": 0.9995
+ },
+ {
+  "image": "00099.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.2195
+ },
+ {
+  "image": "00100.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   5.05,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 1,
+  "total_area_km2": 2.8305,
+  "largest_area_km2": 2.8305,
+  "centroid_lon": 23.068165,
+  "centroid_lat": 59.651778,
+  "max_prob": 0.9973
+ },
+ {
+  "image": "00101.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   5.06,
+   9.93
+  ],
+  "detected": false,
+  "n_slicks": 0,
+  "total_area_km2": 0,
+  "largest_area_km2": 0.0,
+  "centroid_lon": null,
+  "centroid_lat": null,
+  "max_prob": 0.5387
+ },
+ {
+  "image": "00102.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   5.03,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 3,
+  "total_area_km2": 0.6037,
+  "largest_area_km2": 0.2256,
+  "centroid_lon": 23.156909,
+  "centroid_lat": 59.798887,
+  "max_prob": 0.999
+ },
+ {
+  "image": "00103.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   5.03,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 2,
+  "total_area_km2": 0.2145,
+  "largest_area_km2": 0.1641,
+  "centroid_lon": 23.413327,
+  "centroid_lat": 59.826639,
+  "max_prob": 0.9761
+ },
+ {
+  "image": "00104.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   5.05,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 5,
+  "total_area_km2": 0.7616,
+  "largest_area_km2": 0.4045,
+  "centroid_lon": 23.355311,
+  "centroid_lat": 59.622655,
+  "max_prob": 0.9883
+ },
+ {
+  "image": "00105.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   5.08,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 1,
+  "total_area_km2": 0.1318,
+  "largest_area_km2": 0.1318,
+  "centroid_lon": 23.297089,
+  "centroid_lat": 59.466977,
+  "max_prob": 0.9751
+ },
+ {
+  "image": "00106.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.3329
+ },
+ {
+  "image": "00107.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0349
+ },
+ {
+  "image": "00108.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0268
+ },
+ {
+  "image": "00109.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0361
+ },
+ {
+  "image": "00110.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0861
+ },
+ {
+  "image": "00111.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   8.15,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 1,
+  "total_area_km2": 0.1096,
+  "largest_area_km2": 0.1096,
+  "centroid_lon": 34.152683,
+  "centroid_lat": 35.393594,
+  "max_prob": 0.9817
+ },
+ {
+  "image": "00112.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   9.44,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 8,
+  "total_area_km2": 2.1215,
+  "largest_area_km2": 0.722,
+  "centroid_lon": 37.275569,
+  "centroid_lat": 19.261323,
+  "max_prob": 0.9929
+ },
+ {
+  "image": "00113.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   8.2,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 2,
+  "total_area_km2": 116.5253,
+  "largest_area_km2": 116.0997,
+  "centroid_lon": 34.164359,
+  "centroid_lat": 34.921258,
+  "max_prob": 0.9995
+ },
+ {
+  "image": "00114.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.1019
+ },
+ {
+  "image": "00115.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0175
+ },
+ {
+  "image": "00116.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   8.06,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 2,
+  "total_area_km2": 0.7724,
+  "largest_area_km2": 0.7114,
+  "centroid_lon": 33.963902,
+  "centroid_lat": 36.242353,
+  "max_prob": 0.8806
+ },
+ {
+  "image": "00117.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   8.13,
+   9.93
+  ],
+  "detected": false,
+  "n_slicks": 0,
+  "total_area_km2": 0,
+  "largest_area_km2": 0.0,
+  "centroid_lon": null,
+  "centroid_lat": null,
+  "max_prob": 0.6284
+ },
+ {
+  "image": "00118.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0149
+ },
+ {
+  "image": "00119.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.1779
+ },
+ {
+  "image": "00120.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.458
+ },
+ {
+  "image": "00121.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   5.08,
+   9.93
+  ],
+  "detected": false,
+  "n_slicks": 0,
+  "total_area_km2": 0,
+  "largest_area_km2": 0.0,
+  "centroid_lon": null,
+  "centroid_lat": null,
+  "max_prob": 0.5096
+ },
+ {
+  "image": "00122.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.2495
+ },
+ {
+  "image": "00123.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   9.95,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 9,
+  "total_area_km2": 1.2252,
+  "largest_area_km2": 0.2797,
+  "centroid_lon": 106.528808,
+  "centroid_lat": -5.477141,
+  "max_prob": 0.9622
+ },
+ {
+  "image": "00124.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   6.87,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 7,
+  "total_area_km2": 120.485,
+  "largest_area_km2": 112.0328,
+  "centroid_lon": -125.777816,
+  "centroid_lat": 46.564962,
+  "max_prob": 0.9998
+ },
+ {
+  "image": "00125.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.1823
+ },
+ {
+  "image": "00126.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0771
+ },
+ {
+  "image": "00127.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   9.43,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 27,
+  "total_area_km2": 63.2557,
+  "largest_area_km2": 31.8756,
+  "centroid_lon": 37.705361,
+  "centroid_lat": 19.436845,
+  "max_prob": 0.999
+ },
+ {
+  "image": "00128.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   9.44,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 4,
+  "total_area_km2": 266.9243,
+  "largest_area_km2": 266.2615,
+  "centroid_lon": 37.706319,
+  "centroid_lat": 19.280823,
+  "max_prob": 1.0
+ },
+ {
+  "image": "00129.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   9.45,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 2,
+  "total_area_km2": 254.7593,
+  "largest_area_km2": 251.8781,
+  "centroid_lon": 37.716768,
+  "centroid_lat": 19.116793,
+  "max_prob": 1.0
+ },
+ {
+  "image": "00130.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   7.0,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 4,
+  "total_area_km2": 23.3919,
+  "largest_area_km2": 21.1921,
+  "centroid_lon": -124.863125,
+  "centroid_lat": 45.480365,
+  "max_prob": 0.9998
+ },
+ {
+  "image": "00131.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   6.86,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 6,
+  "total_area_km2": 110.7255,
+  "largest_area_km2": 109.0541,
+  "centroid_lon": -125.578419,
+  "centroid_lat": 46.737716,
+  "max_prob": 0.999
+ },
+ {
+  "image": "00132.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0983
+ },
+ {
+  "image": "00133.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0228
+ },
+ {
+  "image": "00134.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.1754
+ },
+ {
+  "image": "00135.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0256
+ },
+ {
+  "image": "00136.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.2187
+ },
+ {
+  "image": "00137.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   9.43,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 51,
+  "total_area_km2": 50.4108,
+  "largest_area_km2": 10.322,
+  "centroid_lon": 37.8526,
+  "centroid_lat": 19.428802,
+  "max_prob": 0.9995
+ },
+ {
+  "image": "00138.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   9.44,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 16,
+  "total_area_km2": 144.2464,
+  "largest_area_km2": 128.782,
+  "centroid_lon": 37.822119,
+  "centroid_lat": 19.282955,
+  "max_prob": 0.9995
+ },
+ {
+  "image": "00139.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   9.45,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 8,
+  "total_area_km2": 224.1549,
+  "largest_area_km2": 222.6116,
+  "centroid_lon": 37.83053,
+  "centroid_lat": 19.099054,
+  "max_prob": 0.9995
+ },
+ {
+  "image": "00140.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0343
+ },
+ {
+  "image": "00141.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0591
+ },
+ {
+  "image": "00142.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0086
+ },
+ {
+  "image": "00143.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0133
+ },
+ {
+  "image": "00144.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   8.11,
+   9.93
+  ],
+  "detected": false,
+  "n_slicks": 0,
+  "total_area_km2": 0,
+  "largest_area_km2": 0.0,
+  "centroid_lon": null,
+  "centroid_lat": null,
+  "max_prob": 0.9177
+ },
+ {
+  "image": "00145.tif",
+  "n_slicks": 0,
+  "total_area_km2": 0.0,
+  "detected": false,
+  "max_prob": 0.0471
+ },
+ {
+  "image": "00146.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   9.43,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 13,
+  "total_area_km2": 67.9783,
+  "largest_area_km2": 23.9359,
+  "centroid_lon": 37.993807,
+  "centroid_lat": 19.466831,
+  "max_prob": 0.999
+ },
+ {
+  "image": "00147.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   9.44,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 13,
+  "total_area_km2": 13.1279,
+  "largest_area_km2": 7.5485,
+  "centroid_lon": 37.975519,
+  "centroid_lat": 19.332608,
+  "max_prob": 0.9971
+ },
+ {
+  "image": "00148.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   9.45,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 12,
+  "total_area_km2": 19.046,
+  "largest_area_km2": 12.143,
+  "centroid_lon": 37.972662,
+  "centroid_lat": 19.072373,
+  "max_prob": 0.9995
+ },
+ {
+  "image": "00149.tif",
+  "crs": "EPSG:4326",
+  "pixel_m": [
+   9.46,
+   9.93
+  ],
+  "detected": true,
+  "n_slicks": 5,
+  "total_area_km2": 289.3388,
+  "largest_area_km2": 285.8429,
+  "centroid_lon": 38.03059,
+  "centroid_lat": 18.924657,
+  "max_prob": 0.9995
+ }
+]

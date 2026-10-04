@@ -1,0 +1,14 @@
+# Versions used for the local AI evaluation; install a PyTorch build appropriate for your GPU.
+numpy==2.5.3
+pandas==3.0.5
+torch==2.14.0
+torchvision==0.29.0
+segmentation-models-pytorch==0.5.0
+rasterio==1.5.1
+shapely==2.1.2
+pyproj==3.8.0
+xarray==2026.7.0
+scipy==1.18.1
+netCDF4==1.7.4
+Pillow==12.3.0
+opencv-python==5.0.0.93

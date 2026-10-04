@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "default": "spill_unet_tiles",
+  "models": [
+    {
+      "id": "spill_unet_tiles",
+      "checkpoint": "runs/spill_unet_tiles.pt",
+      "sha256": "b9a99e7b7b3c948cc729b283b712df28bc71c9e79e4b8916acb3903238644394",
+      "channels": "dual",
+      "architecture": "Unet/resnet34",
+      "status": "experimental",
+      "input": "VV/VH Sigma0 dB GeoTIFF",
+      "output": "uncalibrated binary oil-slick sigmoid mask"
+    }
+  ],
+  "scene_verifier": {
+    "artifact": "runs/scene_verifier/verifier.json",
+    "sha256": "9e209638148d1b6250b2c62ed0f88b0cca0de1cebdb4f9e9c744e846904d6060",
+    "status": "experimental_optional",
+    "threshold_source": "Part I/II validation only",
+    "training_scenes": 1658,
+    "validation_scenes": 226,
+    "excluded_scenes": 1
+  }
+}

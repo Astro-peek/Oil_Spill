@@ -180,7 +180,7 @@ document?.addEventListener('DOMContentLoaded', async () => {
     if (saved) {
         try {
             Object.assign(appState, JSON.parse(saved));
-        } catch(e) { console.warn('State restore failed:', e); }
+        } catch (e) { console.warn('State restore failed:', e); }
     }
 
     // Update nav ID on all pages
@@ -551,7 +551,7 @@ function renderMapLayers() {
 
     mapLayers.investigationMarker = L.marker(center, {
         title: 'Investigation Centroid'
-    }).addTo(map).bindPopup(`
+    }).addTo(map).bindTooltip('📍 Investigation Location', { sticky: true, className: 'mono' }).bindPopup(`
         <div class="mono">
             <strong>Investigation Location</strong><br>
             Lat: ${appState.coordinates.lat.toFixed(4)} &deg;N<br>
@@ -565,34 +565,45 @@ function renderMapLayers() {
     const cLon = appState.detection.centroid?.lon || appState.coordinates.lon + 0.003;
 
     if (appState.analysisComplete) {
-        const spillCoords = generateSlickPolygonCoords(cLat, cLon);
+        let spillCoords;
+        if (appState.detection.polygon && appState.detection.polygon.coordinates) {
+            spillCoords = appState.detection.polygon.coordinates[0].map(pt => [pt[1], pt[0]]);
+        } else {
+            spillCoords = generateSlickPolygonCoords(cLat, cLon);
+        }
         mapLayers.spillPolygon = L.polygon(spillCoords, {
             color: '#eab308',
             fillColor: '#eab308',
             fillOpacity: 0.35,
             weight: 2
-        }).bindPopup(`<div class="mono"><strong>🛢️ Oil Slick</strong><br>Area: ${appState.detection.areaKm2 || 14.8} km²<br>Confidence: ${appState.detection.confidence || 87}%<br>Age: ~${appState.detection.slickAgeHours || 24}h</div>`);
+        }).bindTooltip('🛢️ Oil Slick (AI)', { sticky: true, className: 'mono' }).bindPopup(`<div class="mono"><strong>🛢️ Oil Slick</strong><br>Area: ${appState.detection.areaKm2 || 14.8} km²<br>Confidence: ${appState.detection.confidence || 87}%<br>Age: ~${appState.detection.slickAgeHours || 24}h</div>`);
         if (appState.layers.spill) mapLayers.spillPolygon.addTo(map);
     }
 
-    // Always compute drift locally from current appState physics
-    const backTrack = calculateDriftTrajectory(
-        cLat, cLon,
-        appState.environment.windSpeed, appState.environment.windDir,
-        appState.environment.currentSpeed, appState.environment.currentDir,
-        appState.drift.forecastHours, true
-    );
-    const fwdTrack = calculateDriftTrajectory(
-        cLat, cLon,
-        appState.environment.windSpeed, appState.environment.windDir,
-        appState.environment.currentSpeed, appState.environment.currentDir,
-        appState.drift.forecastHours, false
-    );
+    let backTrack = appState.drift.trajectoryBack;
+    let fwdTrack = appState.drift.trajectoryForward;
+
+    if (!backTrack || backTrack.length === 0) {
+        backTrack = calculateDriftTrajectory(
+            cLat, cLon, appState.environment.windSpeed, appState.environment.windDir,
+            appState.environment.currentSpeed, appState.environment.currentDir,
+            appState.drift.forecastHours, true
+        );
+    }
+    if (!fwdTrack || fwdTrack.length === 0) {
+        fwdTrack = calculateDriftTrajectory(
+            cLat, cLon, appState.environment.windSpeed, appState.environment.windDir,
+            appState.environment.currentSpeed, appState.environment.currentDir,
+            appState.drift.forecastHours, false
+        );
+    }
 
     // Update origin from back-drift end point
-    const originPt = backTrack[backTrack.length - 1];
-    appState.origin.lat = originPt[0];
-    appState.origin.lon = originPt[1];
+    if (backTrack.length > 0) {
+        const originPt = backTrack[backTrack.length - 1];
+        appState.origin.lat = originPt[0];
+        appState.origin.lon = originPt[1];
+    }
 
     mapLayers.originCircle = L.circle([appState.origin.lat, appState.origin.lon], {
         radius: appState.origin.radiusKm * 1000,
@@ -601,7 +612,7 @@ function renderMapLayers() {
         fillOpacity: 0.18,
         dashArray: '6,6',
         weight: 2
-    }).bindPopup(`<div class="mono"><strong>🔴 Probable Origin Zone</strong><br>Lat: ${appState.origin.lat.toFixed(4)}°N<br>Lon: ${appState.origin.lon.toFixed(4)}°E<br>Radius: ${appState.origin.radiusKm} km</div>`);
+    }).bindTooltip('🔴 Probable Origin Zone', { sticky: true, className: 'mono' }).bindPopup(`<div class="mono"><strong>🔴 Probable Origin Zone</strong><br>Lat: ${appState.origin.lat.toFixed(4)}°N<br>Lon: ${appState.origin.lon.toFixed(4)}°E<br>Radius: ${appState.origin.radiusKm} km</div>`);
     if (appState.layers.origin) mapLayers.originCircle.addTo(map);
 
     mapLayers.backDriftPolyline = L.polyline(backTrack, {
@@ -609,24 +620,27 @@ function renderMapLayers() {
         weight: 2.5,
         dashArray: '8,6',
         opacity: 0.9
-    }).bindPopup('<div class="mono"><strong>⬅️ Back-Drift Trajectory</strong><br>Traces slick backwards to probable source</div>');
+    }).bindTooltip('⬅️ Back-Drift Trajectory', { sticky: true, className: 'mono' }).bindPopup('<div class="mono"><strong>⬅️ Back-Drift Trajectory</strong><br>Traces slick backwards to probable source</div>');
     if (appState.layers.backDrift) mapLayers.backDriftPolyline.addTo(map);
 
     mapLayers.forwardDriftPolyline = L.polyline(fwdTrack, {
         color: '#0ea5e9',
         weight: 2.5,
         opacity: 0.85
-    }).bindPopup('<div class="mono"><strong>➡️ Forecast Trajectory</strong><br>Predicted future drift of slick</div>');
+    }).bindTooltip('➡️ Forecast Trajectory', { sticky: true, className: 'mono' }).bindPopup('<div class="mono"><strong>➡️ Forecast Trajectory</strong><br>Predicted future drift of slick</div>');
     if (appState.layers.forwardDrift) mapLayers.forwardDriftPolyline.addTo(map);
 
-    const coneCoords = calculateUncertaintyCone(backTrack);
+    let coneCoords = appState._uncertaintyCone;
+    if (!coneCoords || coneCoords.length === 0) {
+        coneCoords = calculateUncertaintyCone(backTrack);
+    }
     mapLayers.uncertaintyConePolygon = L.polygon(coneCoords, {
         color: '#f97316',
         fillColor: '#f97316',
         fillOpacity: 0.07,
         weight: 1,
         dashArray: '4,4'
-    });
+    }).bindTooltip('🌫️ Uncertainty Cone', { sticky: true, className: 'mono' });
     if (appState.layers.cone) mapLayers.uncertaintyConePolygon.addTo(map);
 
     updateVesselMapPositions();
@@ -656,7 +670,7 @@ function updateVesselMapPositions() {
             color: v.id === appState.selectedVesselId ? '#f97316' : '#64748b',
             weight: v.id === appState.selectedVesselId ? 3 : 1.5,
             opacity: 0.7
-        });
+        }).bindTooltip(`〰️ ${v.name} Track`, { sticky: true, className: 'mono' });
         if (appState.layers.vesselTracks) trackLine.addTo(map);
         mapLayers.vesselTrackLines.push(trackLine);
 
@@ -673,7 +687,7 @@ function updateVesselMapPositions() {
             iconAnchor: [7, 7]
         });
 
-        const marker = L.marker([curPos.lat, curPos.lon], { icon: customIcon }).bindPopup(`
+        const marker = L.marker([curPos.lat, curPos.lon], { icon: customIcon }).bindTooltip(`🚢 ${v.name}`, { sticky: true, className: 'mono' }).bindPopup(`
             <div class="mono">
                 <strong>${v.name}</strong> ${v.anomaly ? '<span style="color:#ef4444;">[AIS GAP]</span>' : ''}<br>
                 MMSI: ${v.mmsi}<br>
@@ -1061,9 +1075,16 @@ async function handleFile(e) {
 
     if (appState.dbId) {
         try {
-            await fetch(`${CONFIG.API_BASE_URL}/investigations/${appState.dbId}/upload`, {
-                method: 'POST'
+            const formData = new FormData();
+            formData.append('sceneImage', file);
+            const res = await fetch(`${CONFIG.API_BASE_URL}/investigations/${appState.dbId}/upload`, {
+                method: 'POST',
+                body: formData
             });
+            const json = await res.json();
+            if (json.success && json.data.sceneId) {
+                appState.sceneId = json.data.sceneId;
+            }
         } catch (e) { console.error(e); }
     }
 }
@@ -1071,6 +1092,7 @@ async function handleFile(e) {
 function resetUploadState() {
     appState.isProcessing = false;
     appState.analysisComplete = false;
+    appState.sceneId = null;
     DOM.fileInput.value = '';
     DOM.previewArea?.classList.add('hidden');
     DOM.uploadZone?.classList.remove('hidden');
@@ -1112,18 +1134,27 @@ function initAnalysis() {
         try {
             await updateStep('step-upload', 'Validating payload...');
 
+            const stepDetect = document.getElementById('step-detect');
+            if (stepDetect) {
+                stepDetect.classList.remove('pending');
+                stepDetect.classList.add('active');
+                stepDetect.textContent = 'Running AI segmentation (~25s)...';
+            }
 
-
-            const fakeSceneId = crypto.randomUUID ? crypto.randomUUID() : '00000000-0000-4000-8000-000000000001';
+            const sceneIdToUse = appState.sceneId || (crypto.randomUUID ? crypto.randomUUID() : '00000000-0000-4000-8000-000000000001');
             const res = await fetch(`${CONFIG.API_BASE_URL}/investigations/${appState.dbId}/analyze`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ sceneId: fakeSceneId })
+                body: JSON.stringify({ sceneId: sceneIdToUse })
             });
             const json = await res.json();
 
             if (json.success) {
-                await updateStep('step-detect', 'Running AI segmentation...');
+                if (stepDetect) {
+                    stepDetect.classList.remove('active');
+                    stepDetect.classList.add('done');
+                    stepDetect.textContent = 'Running AI segmentation ✓';
+                }
                 appState.detection = json.data.detection;
 
                 await updateStep('step-validate', 'Evaluating look-alike risk...');
@@ -1152,12 +1183,12 @@ function initAnalysis() {
 
                 completeAnalysis();
             } else {
-                throw new Error("API validation failed");
+                throw new Error(json.error?.message || "API validation failed");
             }
 
         } catch (e) {
             console.error(e);
-            alert('Analysis workflow interrupted. Resetting state.');
+            alert(`Analysis workflow interrupted:\n${e.message || 'Unknown Error'}\n\nResetting state.`);
             resetUploadState();
         } finally {
             appState.isProcessing = false;
@@ -1196,6 +1227,15 @@ function completeAnalysis() {
     updateUIElements();
     renderEvidenceChain();
     generateDossier();
+
+    // Fix map cut-off issue by invalidating size after layout changes are rendered
+    setTimeout(() => {
+        if (map) { map.invalidateSize(); }
+        if (mapLayers.spillPolygon) {
+            map.fitBounds(mapLayers.spillPolygon.getBounds().pad(0.3));
+        }
+    }, 150);
+
     if (DOM.exportBtn) DOM.exportBtn.disabled = false;
     saveState();
 }
@@ -1260,7 +1300,7 @@ function generateDossier() {
         ['Primary Centroid', `${appState.coordinates.lat.toFixed(4)} N, ${appState.coordinates.lon.toFixed(4)} E`],
         ['Primary Sensor', 'Sentinel-1 SAR C-Band'],
         ['Oil Slick Area', `${d.areaKm2 || 14.8} km²`],
-        ['Detection Confidence', `${d.confidence || 87}% (${(d.confidence||87) >= 80 ? 'High' : 'Medium'})`],
+        ['Detection Confidence', `${d.confidence || 87}% (${(d.confidence || 87) >= 80 ? 'High' : 'Medium'})`],
         ['Slick Age Estimate', `${d.slickAgeHours || 24} hours`],
         ['Wind Vectors', `${appState.environment.windSpeed} kts @ ${appState.environment.windDir}°`],
         ['Current Vectors', `${appState.environment.currentSpeed} m/s @ ${appState.environment.currentDir}°`],

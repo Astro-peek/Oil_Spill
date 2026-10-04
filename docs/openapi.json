@@ -1,0 +1,562 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Oil spill AI \u2014 proposed API",
+    "version": "0.1.0",
+    "description": "Design contract; HTTP service is not implemented."
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/v1/health": {
+      "get": {
+        "operationId": "health",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Health",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/models": {
+      "get": {
+        "operationId": "listModels",
+        "responses": {
+          "200": {
+            "description": "Models",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Models"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/analyses": {
+      "post": {
+        "operationId": "createAnalysis",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalysisRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Job",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/analyses/{analysis_id}": {
+      "parameters": [
+        {
+          "name": "analysis_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "getAnalysis",
+        "responses": {
+          "200": {
+            "description": "Job",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/analyses/{analysis_id}/result": {
+      "parameters": [
+        {
+          "name": "analysis_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "getResult",
+        "responses": {
+          "200": {
+            "description": "AnalysisResult",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalysisResult"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/analyses/{analysis_id}/cancel": {
+      "parameters": [
+        {
+          "name": "analysis_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "cancelAnalysis",
+        "responses": {
+          "202": {
+            "description": "Job",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/analyses/{analysis_id}/artifacts/{name}": {
+      "parameters": [
+        {
+          "name": "analysis_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "name",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "enum": [
+              "probability.tif",
+              "mask.tif",
+              "slicks.geojson",
+              "drift.geojson",
+              "analysis.json"
+            ]
+          }
+        }
+      ],
+      "get": {
+        "operationId": "getArtifact",
+        "responses": {
+          "303": {
+            "description": "Redirect to authorized short-lived artifact URL",
+            "headers": {
+              "Location": {
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AnalysisRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "image_asset_id",
+          "model_id"
+        ],
+        "properties": {
+          "image_asset_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "model_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "currents_asset_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "wind_asset_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "ais_asset_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "acquired_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "acquisition_time_source": {
+            "type": "string",
+            "enum": [
+              "satellite_product_metadata",
+              "user_supplied"
+            ]
+          },
+          "options": {
+            "$ref": "#/components/schemas/Options"
+          }
+        },
+        "dependentRequired": {
+          "currents_asset_id": [
+            "acquired_at",
+            "acquisition_time_source"
+          ],
+          "wind_asset_id": [
+            "currents_asset_id"
+          ],
+          "ais_asset_id": [
+            "currents_asset_id"
+          ]
+        }
+      },
+      "Options": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "threshold": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "exclusiveMaximum": 1,
+            "default": 0.5
+          },
+          "min_area_km2": {
+            "type": "number",
+            "minimum": 0,
+            "default": 0.05
+          },
+          "forecast_hours": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "maximum": 72,
+            "default": 24
+          },
+          "hindcast_hours": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "maximum": 72,
+            "default": 24
+          },
+          "particles": {
+            "type": "integer",
+            "minimum": 3,
+            "maximum": 2000,
+            "default": 200
+          },
+          "ensemble_members": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20,
+            "default": 3
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "default": 0
+          }
+        }
+      },
+      "Job": {
+        "type": "object",
+        "required": [
+          "analysis_id",
+          "status",
+          "created_at"
+        ],
+        "properties": {
+          "analysis_id": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "queued",
+              "validating",
+              "detecting",
+              "drifting",
+              "attributing",
+              "succeeded",
+              "partial",
+              "failed",
+              "cancel_requested",
+              "cancelled"
+            ]
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "stage_detail": {
+            "type": "string"
+          },
+          "result_url": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "error": {
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": [
+          "code",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "enum": [
+              "INVALID_ASSET",
+              "UNSUPPORTED_SENSOR",
+              "MISSING_ACQUISITION_TIME",
+              "FORCING_COVERAGE",
+              "INVALID_AIS",
+              "RESOURCE_LIMIT",
+              "MODEL_MISMATCH",
+              "NOT_READY",
+              "NOT_FOUND",
+              "UNAUTHORIZED",
+              "INTERNAL_ERROR"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "stage": {
+            "type": "string"
+          },
+          "request_id": {
+            "type": "string"
+          }
+        }
+      },
+      "AnalysisResult": {
+        "type": "object",
+        "required": [
+          "schema_version",
+          "summary",
+          "incidents",
+          "provenance",
+          "artifacts",
+          "limitations"
+        ],
+        "properties": {
+          "schema_version": {
+            "const": "1.0"
+          },
+          "summary": {
+            "type": "object"
+          },
+          "incidents": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "provenance": {
+            "type": "object"
+          },
+          "artifacts": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "limitations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "description": "Mirrors ai_pipeline.py analysis.json; incident sub-schemas will be frozen with the HTTP adapter."
+      },
+      "Models": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "model_id",
+            "input_type",
+            "status"
+          ],
+          "properties": {
+            "model_id": {
+              "type": "string"
+            },
+            "input_type": {
+              "const": "SAR Sigma0 dB GeoTIFF; VV then VH"
+            },
+            "status": {
+              "enum": [
+                "experimental",
+                "validated",
+                "deprecated"
+              ]
+            },
+            "checkpoint_sha256": {
+              "type": "string"
+            },
+            "benchmark_url": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Health": {
+        "type": "object",
+        "required": [
+          "ready"
+        ],
+        "properties": {
+          "ready": {
+            "type": "boolean"
+          },
+          "workers_available": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

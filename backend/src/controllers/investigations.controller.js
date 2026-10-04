@@ -1,15 +1,17 @@
 const supabase = require('../config/supabase');
-const ai = require('../services/aiClient');
 const { generateAndUploadDossier } = require('../services/dossier');
+const path = require('path');
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
+const fs = require('fs/promises');
+const os = require('os');
+const crypto = require('crypto');
 
 exports.create = async (req, res, next) => {
   try {
     const { lat, lon } = req.body;
     const code = `OT-${new Date().toISOString().slice(0,10).replace(/-/g,'')}-${Math.floor(Math.random()*1000).toString().padStart(3,'0')}`;
     const payload = { lat, lon, code };
-
-
-
 
     const { data, error } = await supabase
       .from('investigations')
@@ -94,13 +96,8 @@ exports.analyze = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-
     const { data: inv, error: invError } = await supabase.from('investigations').select().eq('id', id).single();
     if (invError) throw invError;
-
-
-    const detection = await ai.detect("mock-url", inv.lat, inv.lon);
-
 
     const environment = inv.environment || {
       windSpeed: 12,
@@ -108,26 +105,30 @@ exports.analyze = async (req, res, next) => {
       currentSpeed: 0.4,
       currentDir: 180
     };
-    const drift = await ai.calculateDrift(detection.centroid, detection.slickAgeHours, environment, 48);
 
-
-    const releaseWindow = { start: "2026-09-12T00:00:00Z", end: "2026-09-12T18:00:00Z" };
-    const candidates = await ai.correlate(drift.origin, releaseWindow, inv.what_if);
-
-
-    const evidenceChain = [
-      { event_type: "success", occurred_label: "T-0h", title: "Anomaly Detected", description: "Spill detected near location.", source: "AI" },
-      { event_type: "warning", occurred_label: "T-2h", title: "Correlation", description: candidates[0]?.name + " in origin radius.", source: "AIS" }
-    ];
+    const outDir = path.join(os.tmpdir(), `oilspill_${crypto.randomUUID()}`);
+    await fs.mkdir(outDir, { recursive: true });
+    
+    // Command to launch python web bridge
+    const runDir = path.join(__dirname, '..', '..', '..');
+    const pythonExe = 'python';
+    
+    // On Windows cmd.exe, use double quotes for the argument and escape inner double quotes
+    const envJson = JSON.stringify(environment).replace(/"/g, '\\"');
+    const cmd = `"${pythonExe}" -m oilspill.web_bridge --out "${outDir}" --lat ${inv.lat} --lon ${inv.lon} --env "${envJson}"`;
+    console.log("Running AI process:", cmd);
+    
+    await exec(cmd, { cwd: runDir });
+    
+    const resultRaw = await fs.readFile(path.join(outDir, 'web.json'), 'utf8');
+    const parsedResult = JSON.parse(resultRaw);
+    
+    // Clean up temporary out directory
+    await fs.rm(outDir, { recursive: true, force: true });
 
     res.json({
       success: true,
-      data: {
-        detection,
-        drift,
-        vessels: candidates,
-        evidenceChain
-      }
+      data: parsedResult
     });
   } catch (err) { next(err); }
 };

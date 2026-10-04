@@ -1,0 +1,227 @@
+[
+  {
+    "category": "Oil",
+    "image": "data/zenodo_part3/Images/Oil/00003.tif",
+    "truth": "data/zenodo_part3/Mask/Oil/00003_segmentation.tif"
+  },
+  {
+    "category": "Oil",
+    "image": "data/zenodo_part3/Images/Oil/00022.tif",
+    "truth": "data/zenodo_part3/Mask/Oil/00022_segmentation.tif"
+  },
+  {
+    "category": "Oil",
+    "image": "data/zenodo_part3/Images/Oil/00023.tif",
+    "truth": "data/zenodo_part3/Mask/Oil/00023_segmentation.tif"
+  },
+  {
+    "category": "Oil",
+    "image": "data/zenodo_part3/Images/Oil/00034.tif",
+    "truth": "data/zenodo_part3/Mask/Oil/00034_segmentation.tif"
+  },
+  {
+    "category": "Oil",
+    "image": "data/zenodo_part3/Images/Oil/00044.tif",
+    "truth": "data/zenodo_part3/Mask/Oil/00044_segmentation.tif"
+  },
+  {
+    "category": "Oil",
+    "image": "data/zenodo_part3/Images/Oil/00064.tif",
+    "truth": "data/zenodo_part3/Mask/Oil/00064_segmentation.tif"
+  },
+  {
+    "category": "Oil",
+    "image": "data/zenodo_part3/Images/Oil/00069.tif",
+    "truth": "data/zenodo_part3/Mask/Oil/00069_segmentation.tif"
+  },
+  {
+    "category": "Oil",
+    "image": "data/zenodo_part3/Images/Oil/00082.tif",
+    "truth": "data/zenodo_part3/Mask/Oil/00082_segmentation.tif"
+  },
+  {
+    "category": "Oil",
+    "image": "data/zenodo_part3/Images/Oil/00092.tif",
+    "truth": "data/zenodo_part3/Mask/Oil/00092_segmentation.tif"
+  },
+  {
+    "category": "Oil",
+    "image": "data/zenodo_part3/Images/Oil/00104.tif",
+    "truth": "data/zenodo_part3/Mask/Oil/00104_segmentation.tif"
+  },
+  {
+    "category": "Oil",
+    "image": "data/zenodo_part3/Images/Oil/00111.tif",
+    "truth": "data/zenodo_part3/Mask/Oil/00111_segmentation.tif"
+  },
+  {
+    "category": "Oil",
+    "image": "data/zenodo_part3/Images/Oil/00114.tif",
+    "truth": "data/zenodo_part3/Mask/Oil/00114_segmentation.tif"
+  },
+  {
+    "category": "Oil",
+    "image": "data/zenodo_part3/Images/Oil/00125.tif",
+    "truth": "data/zenodo_part3/Mask/Oil/00125_segmentation.tif"
+  },
+  {
+    "category": "Oil",
+    "image": "data/zenodo_part3/Images/Oil/00129.tif",
+    "truth": "data/zenodo_part3/Mask/Oil/00129_segmentation.tif"
+  },
+  {
+    "category": "Oil",
+    "image": "data/zenodo_part3/Images/Oil/00145.tif",
+    "truth": "data/zenodo_part3/Mask/Oil/00145_segmentation.tif"
+  },
+  {
+    "category": "Lookalike",
+    "image": "data/zenodo_part3/Images/Lookalike/00014.tif",
+    "truth": "data/zenodo_part3/Mask/Lookalike/00014_segmentation.tif"
+  },
+  {
+    "category": "Lookalike",
+    "image": "data/zenodo_part3/Images/Lookalike/00031.tif",
+    "truth": "data/zenodo_part3/Mask/Lookalike/00031_segmentation.tif"
+  },
+  {
+    "category": "Lookalike",
+    "image": "data/zenodo_part3/Images/Lookalike/00035.tif",
+    "truth": "data/zenodo_part3/Mask/Lookalike/00035_segmentation.tif"
+  },
+  {
+    "category": "Lookalike",
+    "image": "data/zenodo_part3/Images/Lookalike/00040.tif",
+    "truth": "data/zenodo_part3/Mask/Lookalike/00040_segmentation.tif"
+  },
+  {
+    "category": "Lookalike",
+    "image": "data/zenodo_part3/Images/Lookalike/00081.tif",
+    "truth": "data/zenodo_part3/Mask/Lookalike/00081_segmentation.tif"
+  },
+  {
+    "category": "Lookalike",
+    "image": "data/zenodo_part3/Images/Lookalike/00096.tif",
+    "truth": "data/zenodo_part3/Mask/Lookalike/00096_segmentation.tif"
+  },
+  {
+    "category": "Lookalike",
+    "image": "data/zenodo_part3/Images/Lookalike/00097.tif",
+    "truth": "data/zenodo_part3/Mask/Lookalike/00097_segmentation.tif"
+  },
+  {
+    "category": "Lookalike",
+    "image": "data/zenodo_part3/Images/Lookalike/00106.tif",
+    "truth": "data/zenodo_part3/Mask/Lookalike/00106_segmentation.tif"
+  },
+  {
+    "category": "Lookalike",
+    "image": "data/zenodo_part3/Images/Lookalike/00107.tif",
+    "truth": "data/zenodo_part3/Mask/Lookalike/00107_segmentation.tif"
+  },
+  {
+    "category": "Lookalike",
+    "image": "data/zenodo_part3/Images/Lookalike/00116.tif",
+    "truth": "data/zenodo_part3/Mask/Lookalike/00116_segmentation.tif"
+  },
+  {
+    "category": "Lookalike",
+    "image": "data/zenodo_part3/Images/Lookalike/00124.tif",
+    "truth": "data/zenodo_part3/Mask/Lookalike/00124_segmentation.tif"
+  },
+  {
+    "category": "Lookalike",
+    "image": "data/zenodo_part3/Images/Lookalike/00129.tif",
+    "truth": "data/zenodo_part3/Mask/Lookalike/00129_segmentation.tif"
+  },
+  {
+    "category": "Lookalike",
+    "image": "data/zenodo_part3/Images/Lookalike/00137.tif",
+    "truth": "data/zenodo_part3/Mask/Lookalike/00137_segmentation.tif"
+  },
+  {
+    "category": "Lookalike",
+    "image": "data/zenodo_part3/Images/Lookalike/00140.tif",
+    "truth": "data/zenodo_part3/Mask/Lookalike/00140_segmentation.tif"
+  },
+  {
+    "category": "Lookalike",
+    "image": "data/zenodo_part3/Images/Lookalike/00149.tif",
+    "truth": "data/zenodo_part3/Mask/Lookalike/00149_segmentation.tif"
+  },
+  {
+    "category": "No oil",
+    "image": "data/zenodo_part3/Images/No oil/00004.tif",
+    "truth": "data/zenodo_part3/Mask/No oil/00004_segmentation.tif"
+  },
+  {
+    "category": "No oil",
+    "image": "data/zenodo_part3/Images/No oil/00006.tif",
+    "truth": "data/zenodo_part3/Mask/No oil/00006_segmentation.tif"
+  },
+  {
+    "category": "No oil",
+    "image": "data/zenodo_part3/Images/No oil/00014.tif",
+    "truth": "data/zenodo_part3/Mask/No oil/00014_segmentation.tif"
+  },
+  {
+    "category": "No oil",
+    "image": "data/zenodo_part3/Images/No oil/00016.tif",
+    "truth": "data/zenodo_part3/Mask/No oil/00016_segmentation.tif"
+  },
+  {
+    "category": "No oil",
+    "image": "data/zenodo_part3/Images/No oil/00045.tif",
+    "truth": "data/zenodo_part3/Mask/No oil/00045_segmentation.tif"
+  },
+  {
+    "category": "No oil",
+    "image": "data/zenodo_part3/Images/No oil/00047.tif",
+    "truth": "data/zenodo_part3/Mask/No oil/00047_segmentation.tif"
+  },
+  {
+    "category": "No oil",
+    "image": "data/zenodo_part3/Images/No oil/00054.tif",
+    "truth": "data/zenodo_part3/Mask/No oil/00054_segmentation.tif"
+  },
+  {
+    "category": "No oil",
+    "image": "data/zenodo_part3/Images/No oil/00060.tif",
+    "truth": "data/zenodo_part3/Mask/No oil/00060_segmentation.tif"
+  },
+  {
+    "category": "No oil",
+    "image": "data/zenodo_part3/Images/No oil/00071.tif",
+    "truth": "data/zenodo_part3/Mask/No oil/00071_segmentation.tif"
+  },
+  {
+    "category": "No oil",
+    "image": "data/zenodo_part3/Images/No oil/00088.tif",
+    "truth": "data/zenodo_part3/Mask/No oil/00088_segmentation.tif"
+  },
+  {
+    "category": "No oil",
+    "image": "data/zenodo_part3/Images/No oil/00122.tif",
+    "truth": "data/zenodo_part3/Mask/No oil/00122_segmentation.tif"
+  },
+  {
+    "category": "No oil",
+    "image": "data/zenodo_part3/Images/No oil/00138.tif",
+    "truth": "data/zenodo_part3/Mask/No oil/00138_segmentation.tif"
+  },
+  {
+    "category": "No oil",
+    "image": "data/zenodo_part3/Images/No oil/00142.tif",
+    "truth": "data/zenodo_part3/Mask/No oil/00142_segmentation.tif"
+  },
+  {
+    "category": "No oil",
+    "image": "data/zenodo_part3/Images/No oil/00143.tif",
+    "truth": "data/zenodo_part3/Mask/No oil/00143_segmentation.tif"
+  },
+  {
+    "category": "No oil",
+    "image": "data/zenodo_part3/Images/No oil/00144.tif",
+    "truth": "data/zenodo_part3/Mask/No oil/00144_segmentation.tif"
+  }
+]
