@@ -81,11 +81,14 @@ exports.patch = async (req, res, next) => {
 
 exports.upload = async (req, res, next) => {
   try {
+    if (!req.file) {
+      throw new Error("No file uploaded");
+    }
     res.json({
       success: true,
       data: {
-        sceneId: "fake-uuid-not-used-much",
-        storagePath: "satellite-scenes/fake-path.tiff",
+        sceneId: req.file.path,
+        storagePath: req.file.path,
         publicUrl: "n/a"
       }
     });

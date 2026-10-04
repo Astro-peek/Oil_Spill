@@ -1,0 +1,75 @@
+﻿node : node:internal/modul
+es/cjs/loader:1424
+At line:1 char:1
++ node src/server.js 2> 
+error.log
++ ~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~
+    + CategoryInfo        
+      : NotSpecified: (n  
+  ode:internal/modules/   
+ cjs/loader:1424:Strin    
+g) [], RemoteExceptio    n
+    + FullyQualifiedError 
+   Id : NativeCommandErr  
+  or
+ 
+  throw err;
+  ^
+
+Error: Cannot find module 
+'express'
+Require stack:
+- C:\Users\paras\ASTRO\Sih
+_26143\Oil_Spill\backend\s
+rc\app.js
+- C:\Users\paras\ASTRO\Sih
+_26143\Oil_Spill\backend\s
+rc\server.js
+    at 
+Module._resolveFilename (n
+ode:internal/modules/cjs/l
+oader:1421:15)
+    at defaultResolveImpl 
+(node:internal/modules/cjs
+/loader:1059:19)
+    at 
+resolveForCJSWithHooks (no
+de:internal/modules/cjs/lo
+ader:1064:22)
+    at Module._load (node:
+internal/modules/cjs/loade
+r:1227:37)
+    at 
+TracingChannel.traceSync (
+node:diagnostics_channel:3
+28:14)
+    at wrapModuleLoad (nod
+e:internal/modules/cjs/loa
+der:245:24)
+    at Module.require (nod
+e:internal/modules/cjs/loa
+der:1504:12)
+    at require (node:inter
+nal/modules/helpers:152:16
+)
+    at Object.<anonymous> 
+(C:\Users\paras\ASTRO\Sih_
+26143\Oil_Spill\backend\sr
+c\app.js:1:17)
+    at Module._compile (no
+de:internal/modules/cjs/lo
+ader:1761:14) {
+  code: 
+'MODULE_NOT_FOUND',
+  requireStack: [
+    'C:\\Users\\paras\\AST
+RO\\Sih_26143\\Oil_Spill\\
+backend\\src\\app.js',
+    'C:\\Users\\paras\\AST
+RO\\Sih_26143\\Oil_Spill\\
+backend\\src\\server.js'
+  ]
+}
+
+Node.js v24.13.0
